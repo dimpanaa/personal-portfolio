@@ -84,12 +84,14 @@
 
   .v8-engine-wrapper {
     position: absolute;
-    top: 50%;
+    top: 60%;
     left: 50%;
     transform: translate(-50%, -50%);
     /* Large size to fill background and crop UI */
-    width: 250vw;
-    height: 250vh;
+    /* width: 250vw;
+    height: 250vh; */
+    width: 1vw;
+    height: 1vh;
     overflow: hidden;
   }
 
@@ -103,7 +105,7 @@
     border: none;
     pointer-events: none;
     /* Grayscale, subtle visibility */
-    opacity: 0.45;
+    opacity: 0.2;
     filter: grayscale(100%) brightness(0.9) contrast(1.2);
   }
 
@@ -140,8 +142,8 @@
   /* Large desktop */
   @media (min-width: 1400px) {
     .v8-engine-wrapper {
-      width: 200vw;
-      height: 200vh;
+      width: 100vw;
+      height: 120vh;
     }
 
     :global(.v8-iframe) {
@@ -152,8 +154,8 @@
   /* Tablet */
   @media (max-width: 1024px) {
     .v8-engine-wrapper {
-      width: 300vw;
-      height: 300vh;
+      width: 100vw;
+      height: 120vh;
     }
 
     :global(.v8-iframe) {
