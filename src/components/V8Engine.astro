@@ -1,227 +1,77 @@
 ---
-// V8 Engine Three.js Component
-// This component creates a subtle rotating V8 engine in the background
+// V8 Engine Sketchfab Embed Component
+// Displays the V8 engine model from Sketchfab as a subtle background element
 ---
 
-<div id="v8-engine-container"></div>
-
-<script>
-  import * as THREE from "three";
-  import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
-  import { OrbitControls } from "three/addons/controls/OrbitControls.js";
-
-  class V8EngineScene {
-    private scene: THREE.Scene;
-    private camera: THREE.PerspectiveCamera;
-    private renderer: THREE.WebGLRenderer;
-    private engine: THREE.Group | null = null;
-    private container: HTMLElement;
-    private animationId: number = 0;
-    private isMobile: boolean;
-
-    constructor() {
-      this.container = document.getElementById("v8-engine-container")!;
-      this.isMobile = window.innerWidth < 768;
-
-      // Scene setup
-      this.scene = new THREE.Scene();
-
-      // Camera
-      this.camera = new THREE.PerspectiveCamera(
-        45,
-        window.innerWidth / window.innerHeight,
-        0.1,
-        1000,
-      );
-      this.camera.position.set(0, 0, this.isMobile ? 8 : 5);
-
-      // Renderer
-      this.renderer = new THREE.WebGLRenderer({
-        antialias: !this.isMobile,
-        alpha: true,
-        powerPreference: this.isMobile ? "low-power" : "high-performance",
-      });
-      this.renderer.setSize(window.innerWidth, window.innerHeight);
-      this.renderer.setPixelRatio(
-        Math.min(window.devicePixelRatio, this.isMobile ? 1 : 2),
-      );
-      this.renderer.setClearColor(0x000000, 0);
-      this.container.appendChild(this.renderer.domElement);
-
-      // Lights
-      this.setupLights();
-
-      // Load model or create placeholder
-      this.loadModel();
-
-      // Event listeners
-      window.addEventListener("resize", this.onResize.bind(this));
-
-      // Start animation
-      this.animate();
-    }
-
-    private setupLights(): void {
-      // Ambient light
-      const ambient = new THREE.AmbientLight(0xffffff, 0.4);
-      this.scene.add(ambient);
-
-      // Key light (main)
-      const keyLight = new THREE.DirectionalLight(0x00d4aa, 1);
-      keyLight.position.set(5, 5, 5);
-      this.scene.add(keyLight);
-
-      // Fill light
-      const fillLight = new THREE.DirectionalLight(0x00a8cc, 0.5);
-      fillLight.position.set(-5, 3, -5);
-      this.scene.add(fillLight);
-
-      // Rim light
-      const rimLight = new THREE.DirectionalLight(0xffffff, 0.3);
-      rimLight.position.set(0, -5, -5);
-      this.scene.add(rimLight);
-    }
-
-    private loadModel(): void {
-      const loader = new GLTFLoader();
-
-      // Try to load the V8 engine model
-      loader.load(
-        "/models/v8-engine.glb",
-        (gltf) => {
-          this.engine = gltf.scene;
-          this.engine.scale.set(0.5, 0.5, 0.5);
-          this.engine.position.set(0, 0, 0);
-
-          // Apply metallic material
-          this.engine.traverse((child) => {
-            if (child instanceof THREE.Mesh) {
-              child.material = new THREE.MeshStandardMaterial({
-                color: 0x888888,
-                metalness: 0.9,
-                roughness: 0.2,
-              });
-            }
-          });
-
-          this.scene.add(this.engine);
-        },
-        undefined,
-        () => {
-          // Model not found, create placeholder geometry
-          this.createPlaceholderEngine();
-        },
-      );
-    }
-
-    private createPlaceholderEngine(): void {
-      // Create a stylized V8-like geometry as placeholder
-      this.engine = new THREE.Group();
-
-      // Main engine block
-      const blockGeometry = new THREE.BoxGeometry(2, 1.5, 1);
-      const metalMaterial = new THREE.MeshStandardMaterial({
-        color: 0x555555,
-        metalness: 0.9,
-        roughness: 0.3,
-      });
-      const block = new THREE.Mesh(blockGeometry, metalMaterial);
-      this.engine.add(block);
-
-      // Cylinder banks (V-shape)
-      const cylinderGeometry = new THREE.CylinderGeometry(0.15, 0.15, 0.8, 16);
-      const accentMaterial = new THREE.MeshStandardMaterial({
-        color: 0x00d4aa,
-        metalness: 0.7,
-        roughness: 0.3,
-        emissive: 0x00d4aa,
-        emissiveIntensity: 0.1,
-      });
-
-      // Left bank (4 cylinders)
-      for (let i = 0; i < 4; i++) {
-        const cylinder = new THREE.Mesh(cylinderGeometry, accentMaterial);
-        cylinder.position.set(-0.6 + i * 0.4, 0.9, -0.3);
-        cylinder.rotation.x = -0.4;
-        this.engine.add(cylinder);
-      }
-
-      // Right bank (4 cylinders)
-      for (let i = 0; i < 4; i++) {
-        const cylinder = new THREE.Mesh(cylinderGeometry, accentMaterial);
-        cylinder.position.set(-0.6 + i * 0.4, 0.9, 0.3);
-        cylinder.rotation.x = 0.4;
-        this.engine.add(cylinder);
-      }
-
-      // Crankshaft indication
-      const crankGeometry = new THREE.TorusGeometry(0.25, 0.05, 8, 32);
-      const crank = new THREE.Mesh(crankGeometry, metalMaterial);
-      crank.position.set(1.2, 0, 0);
-      crank.rotation.y = Math.PI / 2;
-      this.engine.add(crank);
-
-      // Air intake
-      const intakeGeometry = new THREE.CylinderGeometry(0.3, 0.4, 0.5, 16);
-      const intake = new THREE.Mesh(intakeGeometry, metalMaterial);
-      intake.position.set(0, 1.3, 0);
-      this.engine.add(intake);
-
-      this.scene.add(this.engine);
-    }
-
-    private animate(): void {
-      this.animationId = requestAnimationFrame(this.animate.bind(this));
-
-      if (this.engine) {
-        // Subtle rotation
-        this.engine.rotation.y += 0.003;
-        this.engine.rotation.x = Math.sin(Date.now() * 0.0005) * 0.1;
-      }
-
-      this.renderer.render(this.scene, this.camera);
-    }
-
-    private onResize(): void {
-      this.camera.aspect = window.innerWidth / window.innerHeight;
-      this.camera.updateProjectionMatrix();
-      this.renderer.setSize(window.innerWidth, window.innerHeight);
-
-      // Update mobile state
-      const wasMobile = this.isMobile;
-      this.isMobile = window.innerWidth < 768;
-
-      if (wasMobile !== this.isMobile) {
-        this.camera.position.z = this.isMobile ? 8 : 5;
-      }
-    }
-
-    public dispose(): void {
-      cancelAnimationFrame(this.animationId);
-      this.renderer.dispose();
-      window.removeEventListener("resize", this.onResize.bind(this));
-    }
-  }
-
-  // Initialize the scene
-  new V8EngineScene();
-</script>
+<div class="v8-engine-background">
+  <iframe
+    title="V8 Engine"
+    class="v8-iframe"
+    src="https://sketchfab.com/models/0bf1c1280f3443fbb0ae4a46d215e0d9/embed?autostart=1&ui_theme=dark&ui_controls=0&ui_infos=0&ui_inspector=0&ui_stop=0&ui_watermark=0&ui_watermark_link=0&ui_ar=0&ui_help=0&ui_settings=0&ui_vr=0&ui_fullscreen=0&ui_annotations=0&dnt=1"
+    frameborder="0"
+    allow="autoplay; fullscreen; xr-spatial-tracking"
+    allowfullscreen
+    mozallowfullscreen="true"
+    webkitallowfullscreen="true"></iframe>
+  <div class="v8-overlay"></div>
+</div>
 
 <style>
-  #v8-engine-container {
+  .v8-engine-background {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
     z-index: -1;
-    opacity: 0.15;
+    pointer-events: none;
+    overflow: hidden;
+  }
+
+  .v8-iframe {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 150%;
+    height: 150%;
+    min-width: 800px;
+    min-height: 600px;
+    border: none;
+    opacity: 0.12;
+    filter: grayscale(30%) contrast(1.1);
     pointer-events: none;
   }
 
+  /* Overlay to ensure content readability and add subtle red tint */
+  .v8-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(
+      ellipse at center,
+      transparent 0%,
+      rgba(0, 0, 0, 0.3) 50%,
+      rgba(0, 0, 0, 0.8) 100%
+    );
+    pointer-events: none;
+  }
+
+  /* Mobile: reduce size and opacity for performance */
   @media (max-width: 768px) {
-    #v8-engine-container {
-      opacity: 0.1;
+    .v8-iframe {
+      opacity: 0.08;
+      width: 200%;
+      height: 200%;
+    }
+  }
+
+  /* Very small screens: hide for performance */
+  @media (max-width: 480px) {
+    .v8-engine-background {
+      display: none;
     }
   }
 </style>

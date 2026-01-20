@@ -3,7 +3,7 @@ import Layout from "../layouts/Layout.astro";
 import V8Engine from "../components/V8Engine.astro";
 ---
 
-<Layout title="Dimpana Jadhav | Mechanical Engineer & 3D Designer">
+<Layout title="Dimpana Jadhav | Mechanical Engineer & Creator">
   <!-- V8 Engine Background -->
   <V8Engine />
 
@@ -25,42 +25,28 @@ import V8Engine from "../components/V8Engine.astro";
     </div>
   </header>
 
-  <!-- Hero Section -->
+  <!-- Hero Section - Canva Inspired -->
   <section class="hero section" id="hero">
     <div class="container">
-      <div class="hero-content">
-        <p class="hero-greeting animate-fade-in">Hi there! I am</p>
-        <h1 class="hero-name animate-fade-in animate-delay-1">
-          Dimpana Jadhav
-        </h1>
-        <div class="hero-title animate-fade-in animate-delay-2">
-          <span class="title-badge">Mechanical Engineer</span>
-          <span class="title-separator">&</span>
-          <span class="title-badge">3D Designer</span>
+      <div class="hero-grid">
+        <div class="hero-content">
+          <h1 class="hero-title animate-fade-in">
+            Hi there!<br />
+            I am Dimpana and<br />
+            I love to create.
+          </h1>
+          <div class="hero-badge animate-fade-in animate-delay-2">
+            <span>Dimpana P Jadhav</span>
+            <span class="badge-divider">|</span>
+            <span>Mechanical Engineer</span>
+          </div>
+          <a href="#contact" class="hero-cta animate-fade-in animate-delay-3">
+            <span class="cta-arrow">↳</span>
+            <span>Work with me today</span>
+          </a>
         </div>
-        <p class="hero-description animate-fade-in animate-delay-3">
-          Passionate about aircraft, engines, and automobiles. Crafting
-          mechanical marvels through engineering precision and creative design.
-        </p>
-        <div class="hero-cta animate-fade-in animate-delay-4">
-          <a href="#portfolio" class="btn btn-primary">View My Work</a>
-          <a href="#contact" class="btn btn-outline">Get In Touch</a>
-        </div>
-      </div>
-      <div class="scroll-indicator">
-        <span>Scroll</span>
-        <div class="scroll-line"></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- About Section -->
-  <section class="section about" id="about">
-    <div class="container">
-      <h2 class="section-title">About Me</h2>
-      <div class="about-grid">
-        <div class="about-image">
-          <div class="image-frame">
+        <div class="hero-image animate-fade-in animate-delay-1">
+          <div class="image-oval">
             <div class="image-placeholder">
               <svg
                 viewBox="0 0 100 100"
@@ -80,33 +66,44 @@ import V8Engine from "../components/V8Engine.astro";
             </div>
           </div>
         </div>
-        <div class="about-content">
-          <h3>Junior Mechanical Engineering Student</h3>
-          <p>
-            I am currently pursuing my Bachelor's degree in Mechanical
-            Engineering at B N M Institute of Technology. My passion lies in the
-            intricate world of aircraft engines, automotive systems, and the
-            artistry of 3D mechanical design.
-          </p>
-          <p>
-            Beyond engineering, I find solace in literature, exploring the
-            depths of human creativity through written words. This blend of
-            technical precision and artistic appreciation shapes my unique
-            approach to mechanical design.
-          </p>
-          <div class="about-stats">
-            <div class="stat">
-              <span class="stat-number">3+</span>
-              <span class="stat-label">Years Learning</span>
-            </div>
-            <div class="stat">
-              <span class="stat-number">10+</span>
-              <span class="stat-label">Projects</span>
-            </div>
-            <div class="stat">
-              <span class="stat-number">∞</span>
-              <span class="stat-label">Curiosity</span>
-            </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- About Section -->
+  <section class="section about" id="about">
+    <div class="container">
+      <h2 class="section-title">Personal Information</h2>
+      <div class="about-content">
+        <p class="about-intro">
+          I am currently pursuing my Bachelor's degree in Mechanical Engineering
+          at
+          <strong>B N M Institute of Technology</strong>. My passion lies in the
+          intricate world of aircraft engines, automotive systems, and the
+          artistry of 3D mechanical design.
+        </p>
+        <p>
+          Beyond engineering, I find solace in literature, exploring the depths
+          of human creativity through written words. This blend of technical
+          precision and artistic appreciation shapes my unique approach to
+          mechanical design.
+        </p>
+        <div class="about-interests">
+          <div class="interest-item">
+            <span class="interest-icon">✈️</span>
+            <span>Aircraft & Engines</span>
+          </div>
+          <div class="interest-item">
+            <span class="interest-icon">🚗</span>
+            <span>Automobiles</span>
+          </div>
+          <div class="interest-item">
+            <span class="interest-icon">📚</span>
+            <span>Literature</span>
+          </div>
+          <div class="interest-item">
+            <span class="interest-icon">🔧</span>
+            <span>3D CAD Design</span>
           </div>
         </div>
       </div>
@@ -117,9 +114,6 @@ import V8Engine from "../components/V8Engine.astro";
   <section class="section portfolio" id="portfolio">
     <div class="container">
       <h2 class="section-title">My Work</h2>
-      <p class="section-subtitle">
-        A collection of mechanical engineering projects and 3D designs
-      </p>
 
       <div class="portfolio-grid">
         <article class="project-card">
@@ -154,9 +148,7 @@ import V8Engine from "../components/V8Engine.astro";
           </div>
           <div class="project-info">
             <h3>V8 Engine Model</h3>
-            <p>
-              Detailed 3D model of a V8 engine with working piston animations
-            </p>
+            <p>Detailed 3D model of a V8 engine with working animations</p>
             <div class="project-tags">
               <span>SolidWorks</span>
               <span>CAD</span>
@@ -225,20 +217,6 @@ import V8Engine from "../components/V8Engine.astro";
                   y2="80"
                   stroke="currentColor"
                   stroke-width="2"></line>
-                <line
-                  x1="20"
-                  y1="50"
-                  x2="35"
-                  y2="50"
-                  stroke="currentColor"
-                  stroke-width="2"></line>
-                <line
-                  x1="65"
-                  y1="50"
-                  x2="80"
-                  y2="50"
-                  stroke="currentColor"
-                  stroke-width="2"></line>
               </svg>
             </div>
           </div>
@@ -282,8 +260,6 @@ import V8Engine from "../components/V8Engine.astro";
                   stroke-width="2"
                   fill="none"
                   transform="rotate(120 50 50)"></ellipse>
-                <circle cx="50" cy="50" r="5" fill="currentColor" opacity="0.5"
-                ></circle>
               </svg>
             </div>
           </div>
@@ -300,41 +276,65 @@ import V8Engine from "../components/V8Engine.astro";
     </div>
   </section>
 
-  <!-- Education Section -->
+  <!-- Education Section - Flight Path Design -->
   <section class="section education" id="education">
     <div class="container">
       <h2 class="section-title">Education</h2>
 
-      <div class="timeline">
-        <div class="timeline-item">
-          <div class="timeline-marker"></div>
-          <div class="timeline-content">
-            <span class="timeline-date">2022 - Present</span>
-            <h3>B.E. in Mechanical Engineering</h3>
-            <p class="timeline-institution">
-              B N M Institute of Technology, Bengaluru
+      <div class="education-flight-path">
+        <!-- Airplane Icon -->
+        <div class="flight-airplane">✈</div>
+
+        <!-- Flight Path SVG -->
+        <svg
+          class="flight-path-svg"
+          viewBox="0 0 800 400"
+          preserveAspectRatio="none"
+        >
+          <path
+            class="flight-path-line"
+            d="M 50 50 Q 200 80, 350 180 Q 500 280, 650 200 Q 750 150, 750 350"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-dasharray="8 8"></path>
+        </svg>
+
+        <!-- Education Items -->
+        <div class="edu-item edu-item-1">
+          <div class="edu-marker">📍</div>
+          <div class="edu-content">
+            <h3>
+              B N M Institute of Technology <span class="edu-location"
+                >(BLR)</span>
+            </h3>
+            <p class="edu-degree">B.E. Mechanical Engineering</p>
+            <p class="edu-score">CGPA: 9.11</p>
+          </div>
+        </div>
+
+        <div class="edu-item edu-item-2">
+          <div class="edu-content">
+            <h3>
+              Christ Junior College <span class="edu-location">(BLR)</span>
+            </h3>
+            <p class="edu-degree">Pre University Course</p>
+            <p class="edu-score">Percentage: 86.5%</p>
+          </div>
+          <div class="edu-marker">📍</div>
+        </div>
+
+        <div class="edu-item edu-item-3">
+          <div class="edu-marker">📍</div>
+          <div class="edu-content">
+            <h3>
+              The Oxford English Highschool <span class="edu-location"
+                >(BLR)</span>
+            </h3>
+            <p class="edu-degree">
+              Secondary Schooling Leaving Certificate Examination
             </p>
-            <p class="timeline-detail">CGPA: 8.5+</p>
-          </div>
-        </div>
-
-        <div class="timeline-item">
-          <div class="timeline-marker"></div>
-          <div class="timeline-content">
-            <span class="timeline-date">2020 - 2022</span>
-            <h3>Pre-University (PCMB)</h3>
-            <p class="timeline-institution">Christ Junior College, Bengaluru</p>
-            <p class="timeline-detail">Percentage: 90%+</p>
-          </div>
-        </div>
-
-        <div class="timeline-item">
-          <div class="timeline-marker"></div>
-          <div class="timeline-content">
-            <span class="timeline-date">2020</span>
-            <h3>SSLC</h3>
-            <p class="timeline-institution">High School</p>
-            <p class="timeline-detail">Percentage: 95%+</p>
+            <p class="edu-score">Percentage: 95.67%</p>
           </div>
         </div>
       </div>
@@ -432,7 +432,6 @@ import V8Engine from "../components/V8Engine.astro";
     z-index: 100;
     padding: var(--space-md) 0;
     background: linear-gradient(to bottom, var(--bg-primary), transparent);
-    backdrop-filter: blur(10px);
   }
 
   .header .container {
@@ -444,7 +443,12 @@ import V8Engine from "../components/V8Engine.astro";
   .logo {
     font-family: var(--font-serif);
     font-size: 1.5rem;
-    font-weight: 700;
+    font-weight: 600;
+    color: var(--text-primary);
+    letter-spacing: 0.05em;
+  }
+
+  .logo:hover {
     color: var(--accent-primary);
   }
 
@@ -455,8 +459,7 @@ import V8Engine from "../components/V8Engine.astro";
 
   .nav a {
     color: var(--text-secondary);
-    font-size: 0.9rem;
-    text-transform: lowercase;
+    font-size: 0.85rem;
     letter-spacing: 0.05em;
     transition: color var(--transition-fast);
   }
@@ -482,113 +485,103 @@ import V8Engine from "../components/V8Engine.astro";
     transition: all var(--transition-normal);
   }
 
-  /* ===== HERO ===== */
+  /* ===== HERO - CANVA INSPIRED ===== */
   .hero {
     min-height: 100vh;
     display: flex;
     align-items: center;
-    justify-content: center;
-    position: relative;
     padding-top: 80px;
   }
 
-  .hero-content {
-    text-align: center;
-    max-width: 800px;
-  }
-
-  .hero-greeting {
-    font-size: 1.2rem;
-    color: var(--accent-primary);
-    margin-bottom: var(--space-sm);
-  }
-
-  .hero-name {
-    margin-bottom: var(--space-md);
-    background: linear-gradient(
-      135deg,
-      var(--text-primary),
-      var(--accent-primary)
-    );
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-xl);
+    align-items: center;
   }
 
   .hero-title {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: var(--space-md);
+    font-size: clamp(2.5rem, 6vw, 4rem);
+    font-weight: 400;
+    font-style: italic;
+    line-height: 1.2;
     margin-bottom: var(--space-lg);
-    flex-wrap: wrap;
   }
 
-  .title-badge {
-    padding: var(--space-sm) var(--space-md);
-    border: 1px solid var(--accent-primary);
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-md);
+    padding: var(--space-sm) var(--space-lg);
+    border: 1px solid var(--gray-600);
     border-radius: var(--radius-full);
     font-size: 0.9rem;
-    color: var(--accent-primary);
-  }
-
-  .title-separator {
-    color: var(--text-muted);
-  }
-
-  .hero-description {
-    font-size: 1.1rem;
     margin-bottom: var(--space-xl);
-    max-width: 600px;
-    margin-left: auto;
-    margin-right: auto;
+  }
+
+  .badge-divider {
+    color: var(--gray-500);
   }
 
   .hero-cta {
-    display: flex;
-    gap: var(--space-md);
-    justify-content: center;
-    flex-wrap: wrap;
-  }
-
-  .scroll-indicator {
-    position: absolute;
-    bottom: var(--space-xl);
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    flex-direction: column;
+    display: inline-flex;
     align-items: center;
     gap: var(--space-sm);
-    color: var(--text-muted);
-    font-size: 0.75rem;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
+    color: var(--text-primary);
+    font-size: 0.95rem;
+    transition: all var(--transition-normal);
   }
 
-  .scroll-line {
-    width: 1px;
-    height: 40px;
-    background: linear-gradient(to bottom, var(--accent-primary), transparent);
-    animation: scrollPulse 2s ease-in-out infinite;
+  .hero-cta:hover {
+    color: var(--accent-primary);
   }
 
-  @keyframes scrollPulse {
-    0%,
-    100% {
-      opacity: 0.3;
-      height: 40px;
-    }
-    50% {
-      opacity: 1;
-      height: 60px;
-    }
+  .cta-arrow {
+    font-size: 1.2rem;
+    transition: transform var(--transition-normal);
+  }
+
+  .hero-cta:hover .cta-arrow {
+    transform: translateX(5px);
+  }
+
+  .hero-image {
+    display: flex;
+    justify-content: center;
+  }
+
+  .image-oval {
+    width: 300px;
+    height: 380px;
+    border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+    overflow: hidden;
+    border: 2px solid var(--gray-700);
+  }
+
+  .image-placeholder {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      135deg,
+      var(--bg-tertiary),
+      var(--bg-secondary)
+    );
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--gray-500);
+  }
+
+  .image-placeholder svg {
+    width: 50%;
+    height: 50%;
   }
 
   /* ===== SECTIONS ===== */
   .section-title {
     text-align: center;
-    margin-bottom: var(--space-md);
+    margin-bottom: var(--space-xl);
+    color: var(--text-primary);
   }
 
   .section-subtitle {
@@ -600,70 +593,42 @@ import V8Engine from "../components/V8Engine.astro";
   }
 
   /* ===== ABOUT ===== */
-  .about-grid {
-    display: grid;
-    grid-template-columns: 300px 1fr;
-    gap: var(--space-xl);
-    align-items: center;
-  }
-
-  .image-frame {
-    width: 100%;
-    aspect-ratio: 1;
-    border-radius: 50%;
-    overflow: hidden;
-    border: 3px solid var(--accent-primary);
-    padding: 5px;
-  }
-
-  .image-placeholder {
-    width: 100%;
-    height: 100%;
-    background: var(--bg-tertiary);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--text-muted);
-  }
-
-  .image-placeholder svg {
-    width: 60%;
-    height: 60%;
-  }
-
-  .about-content h3 {
-    color: var(--accent-primary);
-    margin-bottom: var(--space-md);
-  }
-
-  .about-content p {
-    margin-bottom: var(--space-md);
-  }
-
-  .about-stats {
-    display: flex;
-    gap: var(--space-xl);
-    margin-top: var(--space-lg);
-  }
-
-  .stat {
+  .about-content {
+    max-width: 800px;
+    margin: 0 auto;
     text-align: center;
   }
 
-  .stat-number {
-    display: block;
-    font-size: 2.5rem;
-    font-weight: 700;
-    font-family: var(--font-serif);
-    color: var(--accent-primary);
+  .about-intro {
+    font-size: 1.15rem;
+    margin-bottom: var(--space-lg);
   }
 
-  .stat-label {
-    font-size: 0.85rem;
-    color: var(--text-muted);
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
+  .about-intro strong {
+    color: var(--text-primary);
+  }
+
+  .about-interests {
+    display: flex;
+    justify-content: center;
+    gap: var(--space-lg);
+    flex-wrap: wrap;
+    margin-top: var(--space-xl);
+  }
+
+  .interest-item {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    padding: var(--space-sm) var(--space-md);
+    background: var(--bg-tertiary);
+    border-radius: var(--radius-md);
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+  }
+
+  .interest-icon {
+    font-size: 1.2rem;
   }
 
   /* ===== PORTFOLIO ===== */
@@ -674,20 +639,18 @@ import V8Engine from "../components/V8Engine.astro";
   }
 
   .project-card {
-    background: var(--bg-secondary);
+    background: var(--bg-card);
+    border: 1px solid var(--gray-800);
     border-radius: var(--radius-lg);
     overflow: hidden;
-    transition:
-      transform var(--transition-normal),
-      box-shadow var(--transition-normal);
+    transition: all var(--transition-normal);
     cursor: pointer;
   }
 
   .project-card:hover {
+    border-color: var(--gray-600);
     transform: translateY(-5px);
-    box-shadow:
-      0 20px 40px rgba(0, 0, 0, 0.3),
-      0 0 30px var(--accent-glow);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
   }
 
   .project-image {
@@ -701,13 +664,12 @@ import V8Engine from "../components/V8Engine.astro";
     display: flex;
     align-items: center;
     justify-content: center;
-    color: var(--accent-primary);
-    opacity: 0.5;
+    color: var(--gray-500);
   }
 
   .project-placeholder svg {
-    width: 50%;
-    height: 50%;
+    width: 40%;
+    height: 40%;
   }
 
   .project-info {
@@ -715,12 +677,14 @@ import V8Engine from "../components/V8Engine.astro";
   }
 
   .project-info h3 {
-    font-size: 1.2rem;
+    font-family: var(--font-sans);
+    font-size: 1.1rem;
+    font-weight: 600;
     margin-bottom: var(--space-sm);
   }
 
   .project-info p {
-    font-size: 0.9rem;
+    font-size: 0.85rem;
     margin-bottom: var(--space-md);
   }
 
@@ -734,79 +698,100 @@ import V8Engine from "../components/V8Engine.astro";
     padding: var(--space-xs) var(--space-sm);
     background: var(--bg-tertiary);
     border-radius: var(--radius-sm);
-    font-size: 0.75rem;
-    color: var(--accent-primary);
-  }
-
-  /* ===== EDUCATION ===== */
-  .timeline {
-    max-width: 600px;
-    margin: 0 auto;
-    position: relative;
-  }
-
-  .timeline::before {
-    content: "";
-    position: absolute;
-    left: 0;
-    top: 0;
-    bottom: 0;
-    width: 2px;
-    background: linear-gradient(
-      to bottom,
-      var(--accent-primary),
-      var(--bg-tertiary)
-    );
-  }
-
-  .timeline-item {
-    position: relative;
-    padding-left: var(--space-xl);
-    padding-bottom: var(--space-xl);
-  }
-
-  .timeline-item:last-child {
-    padding-bottom: 0;
-  }
-
-  .timeline-marker {
-    position: absolute;
-    left: -6px;
-    top: 5px;
-    width: 14px;
-    height: 14px;
-    border-radius: 50%;
-    background: var(--accent-primary);
-    box-shadow: 0 0 10px var(--accent-glow);
-  }
-
-  .timeline-content {
-    background: var(--bg-secondary);
-    padding: var(--space-lg);
-    border-radius: var(--radius-md);
-  }
-
-  .timeline-date {
-    font-size: 0.8rem;
+    font-size: 0.7rem;
     color: var(--accent-primary);
     text-transform: uppercase;
-    letter-spacing: 0.1em;
+    letter-spacing: 0.05em;
   }
 
-  .timeline-content h3 {
-    margin: var(--space-sm) 0;
-    font-size: 1.1rem;
+  /* ===== EDUCATION - FLIGHT PATH ===== */
+  .education-flight-path {
+    position: relative;
+    min-height: 500px;
+    max-width: 900px;
+    margin: 0 auto;
   }
 
-  .timeline-institution {
-    font-size: 0.95rem;
+  .flight-airplane {
+    position: absolute;
+    top: 20px;
+    left: 30px;
+    font-size: 2rem;
+    transform: rotate(-30deg);
+    opacity: 0.7;
+  }
+
+  .flight-path-svg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    color: var(--gray-600);
+    pointer-events: none;
+  }
+
+  .flight-path-line {
+    stroke-dashoffset: 1000;
+    animation: drawPath 3s ease forwards;
+  }
+
+  @keyframes drawPath {
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
+
+  .edu-item {
+    position: absolute;
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-md);
+  }
+
+  .edu-item-1 {
+    top: 50px;
+    left: 80px;
+  }
+
+  .edu-item-2 {
+    top: 200px;
+    right: 50px;
+    text-align: right;
+  }
+
+  .edu-item-3 {
+    bottom: 50px;
+    left: 50px;
+  }
+
+  .edu-marker {
+    font-size: 1.5rem;
+    line-height: 1;
+  }
+
+  .edu-content h3 {
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: var(--space-xs);
+  }
+
+  .edu-location {
+    color: var(--gray-400);
+    font-weight: 400;
+    font-size: 0.85rem;
+  }
+
+  .edu-degree {
+    font-size: 0.85rem;
     color: var(--text-secondary);
     margin-bottom: var(--space-xs);
   }
 
-  .timeline-detail {
-    font-size: 0.85rem;
-    color: var(--text-muted);
+  .edu-score {
+    font-size: 0.8rem;
+    color: var(--gray-400);
   }
 
   /* ===== CONTACT ===== */
@@ -823,7 +808,7 @@ import V8Engine from "../components/V8Engine.astro";
 
   .btn-large {
     padding: var(--space-lg) var(--space-xl);
-    font-size: 1rem;
+    font-size: 0.95rem;
   }
 
   .social-links {
@@ -832,10 +817,8 @@ import V8Engine from "../components/V8Engine.astro";
   }
 
   .social-links a {
-    color: var(--text-muted);
-    transition:
-      color var(--transition-fast),
-      transform var(--transition-fast);
+    color: var(--gray-400);
+    transition: all var(--transition-fast);
   }
 
   .social-links a:hover {
@@ -847,12 +830,12 @@ import V8Engine from "../components/V8Engine.astro";
   .footer {
     padding: var(--space-lg) 0;
     text-align: center;
-    border-top: 1px solid var(--bg-tertiary);
+    border-top: 1px solid var(--gray-800);
   }
 
   .footer p {
-    font-size: 0.85rem;
-    color: var(--text-muted);
+    font-size: 0.8rem;
+    color: var(--gray-500);
     margin: 0 auto;
   }
 
@@ -900,27 +883,53 @@ import V8Engine from "../components/V8Engine.astro";
       transform: rotate(-45deg) translate(5px, -5px);
     }
 
-    .about-grid {
+    .hero-grid {
       grid-template-columns: 1fr;
       text-align: center;
     }
 
-    .about-image {
-      max-width: 200px;
-      margin: 0 auto;
+    .hero-content {
+      order: 2;
     }
 
-    .about-stats {
-      justify-content: center;
+    .hero-image {
+      order: 1;
     }
 
-    .hero-title {
+    .image-oval {
+      width: 200px;
+      height: 260px;
+    }
+
+    .hero-badge {
       flex-direction: column;
-      gap: var(--space-sm);
+      gap: var(--space-xs);
     }
 
-    .title-separator {
+    .badge-divider {
       display: none;
+    }
+
+    /* Education responsive */
+    .education-flight-path {
+      min-height: auto;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-xl);
+    }
+
+    .flight-airplane,
+    .flight-path-svg {
+      display: none;
+    }
+
+    .edu-item {
+      position: static;
+      text-align: left;
+    }
+
+    .edu-item-2 {
+      text-align: left;
     }
   }
 </style>
@@ -964,7 +973,9 @@ import V8Engine from "../components/V8Engine.astro";
     });
   }, observerOptions);
 
-  document.querySelectorAll(".project-card, .timeline-item").forEach((el) => {
-    observer.observe(el);
-  });
+  document
+    .querySelectorAll(".project-card, .edu-item, .interest-item")
+    .forEach((el) => {
+      observer.observe(el);
+    });
 </script>
