@@ -28,6 +28,26 @@ npm run dev
 npm run build
 ```
 
+## Project Structure
+
+```
+DJ-Portfolio/
+├── src/
+│   ├── components/
+│   │   └── V8Engine.astro     # Three.js 3D background
+│   ├── layouts/
+│   │   └── Layout.astro        # Base layout with global styles
+│   └── pages/
+│       └── index.astro         # Main page with all sections
+├── public/
+│   ├── favicon.svg
+│   └── models/                 # Place V8 engine GLB here
+├── package.json
+└── astro.config.mjs
+```
+
 ## Status
 
-🚧 In Development
+✅ Phase 1: Setup complete  
+✅ Phase 2: V8 engine + sections complete  
+⏳ Phase 3: Polish (next)
