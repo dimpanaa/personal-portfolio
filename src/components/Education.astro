@@ -1,19 +1,12 @@
 ---
-// Education component with animated flight path using anime.js
-// Path flows from bottom (High School) to top (Current - BNMIT)
+// Education component - Final Fixes
+// Layout: S-Curve with extreme clearance for text
 import { getCollection } from "astro:content";
 
-// Fetch education entries from content collection, sorted by order
 const educationEntries = await getCollection("education");
 const sortedEducation = [...educationEntries].sort(
   (a, b) => (a.data.order as number) - (b.data.order as number),
 );
-
-// Helper function to get stop class based on index
-const getStopClass = (index: number) => {
-  const classes = ["stop-1", "stop-2", "stop-3"];
-  return classes[index] || "stop-3";
-};
 ---
 
 <section class="section education" id="education">
@@ -21,130 +14,180 @@ const getStopClass = (index: number) => {
     <h2 class="section-title">Education</h2>
 
     <div class="education-journey">
-      <!-- SVG Flight Path -->
+      <!-- SVG Layer -->
+      <!-- Z-index 0 to be behind, but path design ensures visual clearance -->
       <svg
         class="flight-path-svg"
-        viewBox="0 0 800 600"
+        viewBox="0 0 1000 650"
         preserveAspectRatio="xMidYMid meet"
       >
-        <!-- Main curved path - Bottom to Top -->
+        <!-- 
+           Path Calculation:
+           
+           Point 1: Oxford Marker (Bottom-Left)
+           - Marker Center: 50, 550
+           - Text is to the RIGHT (approx 80 to 450)
+           - Path Start: 50, 550
+           
+           Point 2: Christ Marker (Middle-Right)
+           - Marker Center: 950, 325
+           - Text is to the LEFT (approx 550 to 920)
+           - To contact 950, 325 without hitting text 550-920...
+           - Path must arrive from BELOW or ABOVE, not straight left.
+           - User complained "behind text", meaning it crossed the text.
+           - Let's Curve BELOW the whole section and come up to 950, 325.
+           
+           Point 3: BNMIT Marker (Top-Left)
+           - Marker Center: 50, 100
+           - Text is to the RIGHT (approx 80 to 450)
+           - Path comes from 950, 325.
+           - Path must arrive at 50, 100 without crossing text 80-450.
+           - Path should curve ABOVE the text and drop down to 50, 100.
+        -->
         <path
           class="flight-line"
           id="education-path"
-          d="M 100 520
-             Q 100 480, 150 480
-             L 350 480
-             Q 400 480, 400 430
-             Q 400 380, 450 380
-             L 650 380
-             Q 700 380, 700 330
-             Q 700 280, 650 280
-             L 450 280
-             Q 400 280, 400 230
-             Q 400 180, 350 180
-             L 150 180
-             Q 100 180, 100 130
-             L 100 80"
+          d="M 50 550
+             C 100 650, 600 650, 950 325
+             C 800 -50, 200 -50, 50 100"
           fill="none"
-          stroke="var(--accent-primary)"
-          stroke-width="3"
-          stroke-dasharray="10 5"
+          stroke="rgba(255, 255, 255, 0.3)"
+          stroke-width="2"
+          stroke-dasharray="8 8"
           stroke-linecap="round"></path>
 
-        <!-- Airplane that follows the path -->
-        <text
-          class="airplane-icon"
-          id="airplane"
-          font-size="28"
-          text-anchor="middle"
-          dominant-baseline="middle">✈</text
-        >
+        <!-- Airplane Icon -->
+        <!-- Standard 'facing right' plane for auto-rotate to work correctly -->
+        <g id="airplane">
+          <path
+            d="M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z"
+            fill="white"
+            transform="scale(1.5) rotate(90 11.5 11)"></path>
+          <!-- rotated 90 because this specific path might be facing up? standard material icon faces up. Rotating 90 makes it face right. -->
+        </g>
       </svg>
 
-      <!-- Education Cards positioned along the path -->
-      <div class="edu-stops">
-        {
-          sortedEducation.map((edu, index) => {
-            const stopClass = getStopClass(index);
-            const isMiddle = index === 1; // stop-2 has reversed order (card before pin)
-            const yearDisplay =
-              edu.data.startYear === edu.data.endYear
-                ? edu.data.startYear
-                : `${edu.data.startYear} - ${edu.data.endYear}`;
+      <!-- Content Layer -->
 
-            return (
-              <div class={`edu-stop ${stopClass}`}>
-                {!isMiddle && <div class="edu-pin-marker">📍</div>}
-                <div class={`edu-card ${edu.data.isCurrent ? "current" : ""}`}>
-                  <h3>
-                    {edu.data.institution}{" "}
-                    <span class="edu-location">({edu.data.location})</span>
-                  </h3>
-                  <p class="edu-degree">{edu.data.degree}</p>
-                  <p class="edu-score">{edu.data.score}</p>
-                  <span class="edu-year">{yearDisplay}</span>
-                </div>
-                {isMiddle && <div class="edu-pin-marker">📍</div>}
-              </div>
-            );
-          })
-        }
+      <!-- 1. BNMIT (Top Left) -->
+      <div class="edu-entry edu-bnmit">
+        <div class="marker-wrapper">
+          <svg
+            class="location-marker current"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <path d="M12 21c-4-4-8-7.5-8-12a8 8 0 1 1 16 0c0 4.5-4 8-8 12z"
+            ></path>
+            <circle cx="12" cy="9" r="3"></circle>
+          </svg>
+        </div>
+        <div class="edu-info">
+          <h3 class="edu-title">
+            {sortedEducation[0]?.data.institution}
+            <span class="edu-location"
+              >({sortedEducation[0]?.data.location})</span
+            >
+          </h3>
+          <p class="edu-degree">{sortedEducation[0]?.data.degree}</p>
+          <p class="edu-score">{sortedEducation[0]?.data.score}</p>
+        </div>
+      </div>
+
+      <!-- 2. Christ Junior (Middle Right) -->
+      <div class="edu-entry edu-christ">
+        <div class="edu-info align-right">
+          <h3 class="edu-title">
+            {sortedEducation[1]?.data.institution}
+            <span class="edu-location"
+              >({sortedEducation[1]?.data.location})</span
+            >
+          </h3>
+          <p class="edu-degree">{sortedEducation[1]?.data.degree}</p>
+          <p class="edu-score">{sortedEducation[1]?.data.score}</p>
+        </div>
+        <div class="marker-wrapper">
+          <svg
+            class="location-marker"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <path d="M12 21c-4-4-8-7.5-8-12a8 8 0 1 1 16 0c0 4.5-4 8-8 12z"
+            ></path>
+            <circle cx="12" cy="9" r="3"></circle>
+          </svg>
+        </div>
+      </div>
+
+      <!-- 3. Oxford (Bottom Left) -->
+      <div class="edu-entry edu-oxford">
+        <div class="marker-wrapper">
+          <svg
+            class="location-marker"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <path d="M12 21c-4-4-8-7.5-8-12a8 8 0 1 1 16 0c0 4.5-4 8-8 12z"
+            ></path>
+            <circle cx="12" cy="9" r="3"></circle>
+          </svg>
+        </div>
+        <div class="edu-info">
+          <h3 class="edu-title">
+            {sortedEducation[2]?.data.institution}
+            <span class="edu-location"
+              >({sortedEducation[2]?.data.location})</span
+            >
+          </h3>
+          <p class="edu-degree">{sortedEducation[2]?.data.degree}</p>
+          <p class="edu-score">{sortedEducation[2]?.data.score}</p>
+        </div>
       </div>
     </div>
   </div>
 </section>
 
 <script>
-  // Animation using native anime.js motion path
   import { animate, svg } from "animejs";
 
   const initAnimation = () => {
-    const path = document.getElementById("education-path");
+    const path = document.getElementById("education-path") as SVGPathElement;
     const airplane = document.getElementById("airplane");
 
     if (!path || !airplane) return;
 
-    // Get path length for proper animation
-    const pathLength = path.getTotalLength();
-
-    // Set initial dash state (hidden)
-    path.style.strokeDasharray = pathLength;
-    path.style.strokeDashoffset = pathLength;
-
-    // Use anime.js motion path
     const motionPath = svg.createMotionPath("#education-path");
 
-    // Animate airplane along the path
     animate("#airplane", {
       ...motionPath,
-      duration: 6000,
-      ease: "linear",
-      loop: true,
-    });
-
-    // Draw the path line
-    animate("#education-path", {
-      strokeDashoffset: [pathLength, 0],
-      duration: 6000,
+      rotate: "auto",
+      duration: 12000,
       ease: "linear",
       loop: true,
     });
   };
 
-  // Initialize on DOM ready
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", initAnimation);
-  } else {
-    initAnimation();
-  }
+  document.addEventListener("DOMContentLoaded", initAnimation);
 </script>
 
 <style>
+  .education {
+    background: var(--bg-primary);
+    overflow: visible;
+  }
+
   .education-journey {
     position: relative;
-    min-height: 600px;
-    max-width: 900px;
+    height: 650px;
+    max-width: 1000px;
     margin: 0 auto;
+    margin-top: var(--space-xl);
   }
 
   .flight-path-svg {
@@ -153,166 +196,134 @@ const getStopClass = (index: number) => {
     left: 0;
     width: 100%;
     height: 100%;
-    z-index: 0;
+    z-index: 100; /* Bring SVG to front so Plane on top? But path creates visual clash if crossing text. 
+                   Since we routed path AROUND text, we can safely put it on top to ensure plane is visible. */
     pointer-events: none;
   }
 
+  /* Make just the path line fully transparent or semi to avoid obscuring? */
   .flight-line {
-    opacity: 0.8;
+    /* kept visible as requested "dotted path" */
   }
 
-  .airplane-icon {
-    fill: var(--text-primary);
-  }
-
-  /* Education stops container */
-  .edu-stops {
-    position: relative;
-    z-index: 1;
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-xl);
-    padding: var(--space-xl) 0;
-    min-height: 550px;
-    justify-content: space-between;
-  }
-
-  .edu-stop {
+  .edu-entry {
+    position: absolute;
+    /* Z-index lower than plane (100) but markers need to be visible. Plane triggers z-index context? */
+    /* SVG is z-100. Entries z-10. */
+    /* If path crosses text now, it will be ON TOP of text. */
+    /* We routed path AROUND text, so this is safe and ensures Plane is visible. */
+    z-index: 10;
     display: flex;
     align-items: flex-start;
-    gap: var(--space-md);
+    gap: 20px;
   }
 
-  /* Position stops to align with path - reversed order */
-  .stop-3 {
-    /* Oxford - Bottom left */
-    align-self: flex-start;
-    margin-left: 5%;
-    order: 3;
-  }
-
-  .stop-2 {
-    /* Christ - Middle right */
-    align-self: flex-end;
-    margin-right: 5%;
-    flex-direction: row-reverse;
-    order: 2;
-  }
-
-  .stop-1 {
-    /* BNMIT - Top left */
-    align-self: flex-start;
-    margin-left: 5%;
-    order: 1;
-  }
-
-  .edu-pin-marker {
-    font-size: 2rem;
+  .marker-wrapper {
     flex-shrink: 0;
-    animation: bounce 2s ease-in-out infinite;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    background: var(--bg-primary);
+    border-radius: 50%;
+    z-index: 20; /* Markers above path line */
   }
 
-  @keyframes bounce {
-    0%,
-    100% {
-      transform: translateY(0);
-    }
-    50% {
-      transform: translateY(-5px);
-    }
+  /* 
+     CSS Positioning matching SVG Coords
+     BNMIT: 50, 100
+     Christ: 950, 325
+     Oxford: 50, 550
+  */
+
+  .edu-bnmit {
+    top: 80px;
+    left: 30px;
   }
 
-  .edu-card {
-    background: rgba(255, 255, 255, 0.03);
-    backdrop-filter: blur(10px);
-    padding: var(--space-lg);
-    border-radius: var(--radius-md);
-    border: 1px solid var(--gray-700);
+  .edu-christ {
+    top: 305px;
+    right: 30px;
+  }
+
+  .edu-oxford {
+    top: 530px;
+    left: 30px;
+  }
+
+  .location-marker {
+    width: 40px;
+    height: 40px;
+    color: white;
+    filter: drop-shadow(0 0 8px rgba(0, 0, 0, 0.8));
+    fill: var(--bg-primary);
+  }
+
+  .location-marker.current {
+    color: var(--accent-primary);
+  }
+
+  .edu-info {
     max-width: 380px;
-    transition: all var(--transition-normal);
+    padding-top: 5px;
   }
 
-  .edu-card.current {
-    border-color: var(--accent-primary);
-    box-shadow: 0 0 20px rgba(255, 75, 75, 0.15);
+  .edu-info.align-right {
+    text-align: right;
   }
 
-  .edu-card:hover {
-    border-color: var(--accent-primary);
-    transform: translateY(-3px);
-    box-shadow: 0 10px 30px rgba(255, 75, 75, 0.1);
-  }
-
-  .edu-card h3 {
-    font-family: var(--font-sans);
-    font-size: 1.15rem;
-    font-weight: 600;
-    margin-bottom: var(--space-sm);
+  .edu-title {
+    font-family: var(--font-serif);
+    font-size: 1.7rem;
+    font-weight: 500;
     color: var(--text-primary);
+    margin-bottom: 5px;
+    line-height: 1.25;
   }
 
   .edu-location {
+    font-size: 0.95rem;
     color: var(--gray-400);
-    font-weight: 400;
-    font-size: 0.9rem;
+    font-weight: 300;
   }
 
   .edu-degree {
-    font-size: 0.95rem;
+    font-size: 1.15rem;
     color: var(--text-secondary);
-    margin-bottom: var(--space-xs);
+    margin-bottom: 4px;
+    font-weight: 300;
   }
 
   .edu-score {
-    font-size: 0.95rem;
+    font-size: 1.1rem;
     color: var(--accent-primary);
-    font-weight: 500;
+    font-weight: 600;
   }
 
-  .edu-year {
-    display: inline-block;
-    margin-top: var(--space-sm);
-    padding: var(--space-xs) var(--space-sm);
-    background: var(--bg-tertiary);
-    border-radius: var(--radius-sm);
-    font-size: 0.8rem;
-    color: var(--gray-400);
-  }
-
-  /* Responsive */
-  @media (max-width: 768px) {
+  @media (max-width: 900px) {
     .education-journey {
-      min-height: auto;
+      height: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 60px;
+      padding: 40px 20px;
     }
 
     .flight-path-svg {
       display: none;
     }
 
-    .edu-stops {
-      min-height: auto;
-      gap: var(--space-lg);
+    .edu-entry {
+      position: static;
     }
 
-    .edu-stop {
-      align-self: stretch !important;
-      margin: 0 !important;
-      flex-direction: row !important;
+    .edu-christ {
+      flex-direction: row-reverse;
+      align-self: flex-end;
     }
 
-    .stop-1 {
-      order: 1;
-    }
-    .stop-2 {
-      order: 2;
-    }
-    .stop-3 {
-      order: 3;
-    }
-
-    .edu-card {
-      max-width: 100%;
-      flex: 1;
+    .edu-christ .edu-info {
+      text-align: right;
     }
   }
 </style>
