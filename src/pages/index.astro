@@ -2,6 +2,13 @@
 import Layout from "../layouts/Layout.astro";
 import V8Engine from "../components/V8Engine.astro";
 import Education from "../components/Education.astro";
+import { getCollection } from "astro:content";
+
+// Fetch projects from content collection, sorted by order
+const projects = await getCollection("projects");
+const sortedProjects = [...projects].sort(
+  (a, b) => (a.data.order as number) - (b.data.order as number),
+);
 ---
 
 <Layout title="Dimpana Jadhav | Mechanical Engineer & Creator">
@@ -33,8 +40,7 @@ import Education from "../components/Education.astro";
         <div class="hero-content">
           <h1 class="hero-title animate-fade-in">
             Hi there!<br />
-            I am <span style="color: var(--accent-primary);">Dimpana</span> and<br
-            />
+            I am <span>Dimpana</span> and<br />
             I love to create.
           </h1>
           <div class="hero-badge animate-fade-in animate-delay-2">
@@ -118,162 +124,53 @@ import Education from "../components/Education.astro";
       <h2 class="section-title">My Work</h2>
 
       <div class="portfolio-grid">
-        <article class="project-card">
-          <div class="project-image">
-            <div class="project-placeholder">
-              <svg viewBox="0 0 100 100" fill="none">
-                <rect
-                  x="20"
-                  y="30"
-                  width="60"
-                  height="40"
-                  rx="5"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  fill="none"></rect>
-                <circle
-                  cx="35"
-                  cy="70"
-                  r="8"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  fill="none"></circle>
-                <circle
-                  cx="65"
-                  cy="70"
-                  r="8"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  fill="none"></circle>
-              </svg>
-            </div>
-          </div>
-          <div class="project-info">
-            <h3>V8 Engine Model</h3>
-            <p>Detailed 3D model of a V8 engine with working animations</p>
-            <div class="project-tags">
-              <span>SolidWorks</span>
-              <span>CAD</span>
-            </div>
-          </div>
-        </article>
-
-        <article class="project-card">
-          <div class="project-image">
-            <div class="project-placeholder">
-              <svg viewBox="0 0 100 100" fill="none">
-                <path
-                  d="M50 20 L80 40 L80 70 L50 90 L20 70 L20 40 Z"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  fill="none"></path>
-                <circle
-                  cx="50"
-                  cy="55"
-                  r="15"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  fill="none"></circle>
-              </svg>
-            </div>
-          </div>
-          <div class="project-info">
-            <h3>Aircraft Component</h3>
-            <p>Precision-engineered aircraft landing gear assembly</p>
-            <div class="project-tags">
-              <span>AutoCAD</span>
-              <span>Analysis</span>
-            </div>
-          </div>
-        </article>
-
-        <article class="project-card">
-          <div class="project-image">
-            <div class="project-placeholder">
-              <svg viewBox="0 0 100 100" fill="none">
-                <circle
-                  cx="50"
-                  cy="50"
-                  r="30"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  fill="none"></circle>
-                <circle
-                  cx="50"
-                  cy="50"
-                  r="15"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  fill="none"></circle>
-                <line
-                  x1="50"
-                  y1="20"
-                  x2="50"
-                  y2="35"
-                  stroke="currentColor"
-                  stroke-width="2"></line>
-                <line
-                  x1="50"
-                  y1="65"
-                  x2="50"
-                  y2="80"
-                  stroke="currentColor"
-                  stroke-width="2"></line>
-              </svg>
-            </div>
-          </div>
-          <div class="project-info">
-            <h3>Gear Mechanism</h3>
-            <p>Complex gear train design for industrial applications</p>
-            <div class="project-tags">
-              <span>Fusion 360</span>
-              <span>Simulation</span>
-            </div>
-          </div>
-        </article>
-
-        <article class="project-card">
-          <div class="project-image">
-            <div class="project-placeholder">
-              <svg viewBox="0 0 100 100" fill="none">
-                <ellipse
-                  cx="50"
-                  cy="50"
-                  rx="35"
-                  ry="15"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  fill="none"></ellipse>
-                <ellipse
-                  cx="50"
-                  cy="50"
-                  rx="35"
-                  ry="15"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  fill="none"
-                  transform="rotate(60 50 50)"></ellipse>
-                <ellipse
-                  cx="50"
-                  cy="50"
-                  rx="35"
-                  ry="15"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  fill="none"
-                  transform="rotate(120 50 50)"></ellipse>
-              </svg>
-            </div>
-          </div>
-          <div class="project-info">
-            <h3>Turbine Design</h3>
-            <p>Aerodynamic turbine blade optimization study</p>
-            <div class="project-tags">
-              <span>ANSYS</span>
-              <span>CFD</span>
-            </div>
-          </div>
-        </article>
+        {
+          sortedProjects.map((project) => (
+            <article class="project-card">
+              <div class="project-image">
+                <div class="project-placeholder">
+                  <svg viewBox="0 0 100 100" fill="none">
+                    <rect
+                      x="20"
+                      y="30"
+                      width="60"
+                      height="40"
+                      rx="5"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      fill="none"
+                    />
+                    <circle
+                      cx="35"
+                      cy="70"
+                      r="8"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      fill="none"
+                    />
+                    <circle
+                      cx="65"
+                      cy="70"
+                      r="8"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      fill="none"
+                    />
+                  </svg>
+                </div>
+              </div>
+              <div class="project-info">
+                <h3>{project.data.title}</h3>
+                <p>{project.data.description}</p>
+                <div class="project-tags">
+                  {project.data.tags.map((tag: string) => (
+                    <span>{tag}</span>
+                  ))}
+                </div>
+              </div>
+            </article>
+          ))
+        }
       </div>
     </div>
   </section>
@@ -495,7 +392,8 @@ import Education from "../components/Education.astro";
   .image-oval {
     width: 350px;
     height: 440px;
-    border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+    /* border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%; */
+    border-radius: 88% 12% 90% 10% / 83% 11% 89% 17%;
     overflow: hidden;
     border: 2px solid var(--gray-600);
   }
@@ -538,9 +436,11 @@ import Education from "../components/Education.astro";
 
   /* ===== ABOUT ===== */
   .about-content {
-    max-width: 900px;
-    margin: 0 auto;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
     text-align: center;
+    padding: 0 var(--space-md);
   }
 
   .about-intro {

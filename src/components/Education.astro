@@ -1,6 +1,19 @@
 ---
 // Education component with animated flight path using anime.js
 // Path flows from bottom (High School) to top (Current - BNMIT)
+import { getCollection } from "astro:content";
+
+// Fetch education entries from content collection, sorted by order
+const educationEntries = await getCollection("education");
+const sortedEducation = [...educationEntries].sort(
+  (a, b) => (a.data.order as number) - (b.data.order as number),
+);
+
+// Helper function to get stop class based on index
+const getStopClass = (index: number) => {
+  const classes = ["stop-1", "stop-2", "stop-3"];
+  return classes[index] || "stop-3";
+};
 ---
 
 <section class="section education" id="education">
@@ -50,46 +63,32 @@
 
       <!-- Education Cards positioned along the path -->
       <div class="edu-stops">
-        <!-- Stop 1: Oxford (Bottom - Start) -->
-        <div class="edu-stop stop-3">
-          <div class="edu-pin-marker">📍</div>
-          <div class="edu-card">
-            <h3>
-              The Oxford English Highschool <span class="edu-location"
-                >(BLR)</span>
-            </h3>
-            <p class="edu-degree">SSLC Examination</p>
-            <p class="edu-score">Percentage: 95.67%</p>
-            <span class="edu-year">2020</span>
-          </div>
-        </div>
+        {
+          sortedEducation.map((edu, index) => {
+            const stopClass = getStopClass(index);
+            const isMiddle = index === 1; // stop-2 has reversed order (card before pin)
+            const yearDisplay =
+              edu.data.startYear === edu.data.endYear
+                ? edu.data.startYear
+                : `${edu.data.startYear} - ${edu.data.endYear}`;
 
-        <!-- Stop 2: Christ Junior College (Middle) -->
-        <div class="edu-stop stop-2">
-          <div class="edu-card">
-            <h3>
-              Christ Junior College <span class="edu-location">(BLR)</span>
-            </h3>
-            <p class="edu-degree">Pre University Course</p>
-            <p class="edu-score">Percentage: 86.5%</p>
-            <span class="edu-year">2020 - 2022</span>
-          </div>
-          <div class="edu-pin-marker">📍</div>
-        </div>
-
-        <!-- Stop 3: BNMIT (Top - End/Current) -->
-        <div class="edu-stop stop-1">
-          <div class="edu-pin-marker">📍</div>
-          <div class="edu-card current">
-            <h3>
-              B N M Institute of Technology <span class="edu-location"
-                >(BLR)</span>
-            </h3>
-            <p class="edu-degree">B.E. Mechanical Engineering</p>
-            <p class="edu-score">CGPA: 9.11</p>
-            <span class="edu-year">2022 - Present</span>
-          </div>
-        </div>
+            return (
+              <div class={`edu-stop ${stopClass}`}>
+                {!isMiddle && <div class="edu-pin-marker">📍</div>}
+                <div class={`edu-card ${edu.data.isCurrent ? "current" : ""}`}>
+                  <h3>
+                    {edu.data.institution}{" "}
+                    <span class="edu-location">({edu.data.location})</span>
+                  </h3>
+                  <p class="edu-degree">{edu.data.degree}</p>
+                  <p class="edu-score">{edu.data.score}</p>
+                  <span class="edu-year">{yearDisplay}</span>
+                </div>
+                {isMiddle && <div class="edu-pin-marker">📍</div>}
+              </div>
+            );
+          })
+        }
       </div>
     </div>
   </div>

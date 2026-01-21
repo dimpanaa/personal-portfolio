@@ -8,12 +8,14 @@ A premium portfolio website for **Dimpana Jadhav** built with Astro and Three.js
 - 🔧 V8 engine 3D animation background (Three.js)
 - 📱 Mobile-first responsive design
 - ⚡ Fast performance with Astro
+- 📝 **Content Collections** - Easy content management via Markdown files
 
 ## Tech Stack
 
-- **Framework**: Astro
-- **3D Graphics**: Three.js
+- **Framework**: Astro 5.x
+- **3D Graphics**: Three.js / Sketchfab Embed
 - **Styling**: Vanilla CSS with custom properties
+- **Content**: Astro Content Collections with Zod validation
 
 ## Getting Started
 
@@ -34,20 +36,167 @@ npm run build
 DJ-Portfolio/
 ├── src/
 │   ├── components/
-│   │   └── V8Engine.astro     # Three.js 3D background
+│   │   ├── V8Engine.astro      # Three.js 3D background
+│   │   └── Education.astro     # Education section with flight path animation
+│   ├── content/                # 📝 CONTENT COLLECTIONS (edit these!)
+│   │   ├── config.ts           # Collection schemas
+│   │   ├── projects/           # Project markdown files
+│   │   ├── education/          # Education markdown files
+│   │   ├── experience/         # Experience markdown files
+│   │   ├── certifications/     # Certification markdown files
+│   │   └── achievements/       # Achievement markdown files
 │   ├── layouts/
 │   │   └── Layout.astro        # Base layout with global styles
 │   └── pages/
 │       └── index.astro         # Main page with all sections
 ├── public/
 │   ├── favicon.svg
-│   └── models/                 # Place V8 engine GLB here
+│   └── models/                 # Place 3D models here
 ├── package.json
 └── astro.config.mjs
 ```
+
+---
+
+## 📝 Content Management Guide
+
+This portfolio uses **Astro Content Collections** to make content management easy. You don't need to know how to code - just edit markdown files!
+
+### Adding a New Project
+
+1. Create a new file in `src/content/projects/` (e.g., `my-new-project.md`)
+2. Use this template:
+
+```markdown
+---
+title: "Project Title"
+description: "Brief description of the project"
+tags: ["Tag1", "Tag2", "Tag3"]
+featured: true
+order: 5
+---
+
+Optional extended description of your project.
+You can write as much as you want here using markdown.
+```
+
+**Fields explained:**
+| Field | Required | Description |
+|-------|----------|-------------|
+| `title` | ✅ Yes | Project name displayed on the card |
+| `description` | ✅ Yes | Short description (1-2 sentences) |
+| `tags` | ✅ Yes | Array of technology/skill tags |
+| `featured` | No | Set to `true` to highlight (default: `false`) |
+| `order` | No | Display order - lower numbers appear first (default: `100`) |
+
+---
+
+### Adding Education
+
+1. Create a new file in `src/content/education/` (e.g., `my-university.md`)
+2. Use this template:
+
+```markdown
+---
+institution: "University/School Name"
+location: "City"
+degree: "Degree or Course Name"
+score: "CGPA: X.XX or Percentage: XX%"
+startYear: "2020"
+endYear: "2024"
+isCurrent: false
+order: 1
+---
+
+Optional description about your studies.
+```
+
+**Fields explained:**
+| Field | Required | Description |
+|-------|----------|-------------|
+| `institution` | ✅ Yes | Name of school/college/university |
+| `location` | ✅ Yes | City abbreviation (e.g., "BLR") |
+| `degree` | ✅ Yes | Degree or course name |
+| `score` | ✅ Yes | CGPA, percentage, or grade |
+| `startYear` | ✅ Yes | Year you started |
+| `endYear` | ✅ Yes | Year you finished (or "Present") |
+| `isCurrent` | No | Set to `true` if currently studying here |
+| `order` | No | Display order (1 = top/newest, higher = older) |
+
+---
+
+### Adding Experience
+
+1. Create a new file in `src/content/experience/` (e.g., `my-company.md`)
+2. Copy from `_template.md` and fill in your details:
+
+```markdown
+---
+company: "Company Name"
+role: "Your Position"
+location: "City"
+startDate: "Jan 2024"
+endDate: "Present"
+isCurrent: true
+order: 1
+---
+
+Description of your responsibilities and achievements.
+
+- Key achievement 1
+- Key achievement 2
+```
+
+---
+
+### Adding Certifications
+
+1. Create a new file in `src/content/certifications/` (e.g., `solidworks-cert.md`)
+2. Use this template:
+
+```markdown
+---
+title: "Certification Name"
+issuer: "Issuing Organization"
+date: "Month Year"
+credentialUrl: "https://verify-link.com"
+order: 1
+---
+
+Optional description.
+```
+
+---
+
+### Adding Achievements
+
+1. Create a new file in `src/content/achievements/` (e.g., `competition-win.md`)
+2. Use this template:
+
+```markdown
+---
+title: "Achievement Title"
+description: "Brief description"
+date: "Month Year"
+order: 1
+---
+
+Extended details about the achievement.
+```
+
+---
+
+## Quick Tips
+
+1. **File names**: Use lowercase with hyphens (e.g., `v8-engine-model.md`)
+2. **Order field**: Lower numbers appear first (1, 2, 3...)
+3. **Preview changes**: Run `npm run dev` to see changes instantly
+4. **Template files**: Files starting with `_` (like `_template.md`) are ignored
+5. **Images**: Place images in `public/images/` and reference as `/images/filename.jpg`
 
 ## Status
 
 ✅ Phase 1: Setup complete  
 ✅ Phase 2: V8 engine + sections complete  
-⏳ Phase 3: Polish (next)
+✅ Phase 3: Content Collections setup complete  
+⏳ Phase 4: Polish (next)
