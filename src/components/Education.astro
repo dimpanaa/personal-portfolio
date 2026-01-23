@@ -1,6 +1,7 @@
 ---
-// Education component - Final Fixes
-// Layout: S-Curve with extreme clearance for text
+// Education component - Final Robust Fix
+// Layout: S-Curve with explicit routing around text
+// Animation: Using CDN anime.js for reliability
 import { getCollection } from "astro:content";
 
 const educationEntries = await getCollection("education");
@@ -15,41 +16,36 @@ const sortedEducation = [...educationEntries].sort(
 
     <div class="education-journey">
       <!-- SVG Layer -->
-      <!-- Z-index 0 to be behind, but path design ensures visual clearance -->
       <svg
         class="flight-path-svg"
-        viewBox="0 0 1000 650"
+        viewBox="0 0 1000 700"
         preserveAspectRatio="xMidYMid meet"
       >
         <!-- 
-           Path Calculation:
-           
-           Point 1: Oxford Marker (Bottom-Left)
-           - Marker Center: 50, 550
-           - Text is to the RIGHT (approx 80 to 450)
-           - Path Start: 50, 550
-           
-           Point 2: Christ Marker (Middle-Right)
-           - Marker Center: 950, 325
-           - Text is to the LEFT (approx 550 to 920)
-           - To contact 950, 325 without hitting text 550-920...
-           - Path must arrive from BELOW or ABOVE, not straight left.
-           - User complained "behind text", meaning it crossed the text.
-           - Let's Curve BELOW the whole section and come up to 950, 325.
-           
-           Point 3: BNMIT Marker (Top-Left)
-           - Marker Center: 50, 100
-           - Text is to the RIGHT (approx 80 to 450)
-           - Path comes from 950, 325.
-           - Path must arrive at 50, 100 without crossing text 80-450.
-           - Path should curve ABOVE the text and drop down to 50, 100.
-        -->
+            Path Strategy:
+            1. Oxford (50, 600) -> Christ (950, 350)
+               - Oxford Text is to the RIGHT of marker (x=100+).
+               - Path starts at 50, 600. 
+               - Dip DOWN to y=680 to go under the text.
+               - Curve up to Christ (950, 350).
+               - Christ Text is to the LEFT of marker (x=...900).
+               - Path approaches 950, 350 from BELOW to avoid text?
+            
+            2. Christ (950, 350) -> BNMIT (50, 100)
+               - BNMIT Text is to the RIGHT of marker (x=100+).
+               - Path arrives at 50, 100.
+               - Path must come from ABOVE to avoid crossing text to the right.
+               - So from Christ, curve Up high (y=20), then drop to 50, 100.
+         -->
         <path
           class="flight-line"
           id="education-path"
-          d="M 50 550
-             C 100 650, 600 650, 950 325
-             C 800 -50, 200 -50, 50 100"
+          d="M 50 600
+             Q 50 680, 200 680
+             T 600 550
+             T 950 350
+             Q 800 50, 400 50
+             T 50 100"
           fill="none"
           stroke="rgba(255, 255, 255, 0.3)"
           stroke-width="2"
@@ -57,13 +53,13 @@ const sortedEducation = [...educationEntries].sort(
           stroke-linecap="round"></path>
 
         <!-- Airplane Icon -->
-        <!-- Standard 'facing right' plane for auto-rotate to work correctly -->
-        <g id="airplane">
+        <g id="airplane" style="display: none;">
+          <!-- Hidden vertically until script runs -->
+          <!-- Simple Plane Shape pointing RIGHT -->
           <path
             d="M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z"
             fill="white"
-            transform="scale(1.5) rotate(90 11.5 11)"></path>
-          <!-- rotated 90 because this specific path might be facing up? standard material icon faces up. Rotating 90 makes it face right. -->
+            transform="scale(1.8) rotate(90 12 12)"></path>
         </g>
       </svg>
 
@@ -153,27 +149,40 @@ const sortedEducation = [...educationEntries].sort(
   </div>
 </section>
 
-<script>
-  import { animate, svg } from "animejs";
+<!-- Load anime.js from CDN for guaranteed functionality -->
+<script
+  is:inline
+  src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"
+></script>
 
-  const initAnimation = () => {
-    const path = document.getElementById("education-path") as SVGPathElement;
+<script is:inline>
+  document.addEventListener("DOMContentLoaded", () => {
+    const path = document.getElementById("education-path");
     const airplane = document.getElementById("airplane");
 
-    if (!path || !airplane) return;
+    // Safety check
+    if (!path || !airplane || typeof anime === "undefined") {
+      console.error("Education Animation: Elements or anime.js not found");
+      if (airplane) airplane.style.display = "block"; // Fallback
+      return;
+    }
 
-    const motionPath = svg.createMotionPath("#education-path");
+    // Show plane
+    airplane.style.display = "block";
 
-    animate("#airplane", {
-      ...motionPath,
-      rotate: "auto",
+    // Create motion path
+    const motionPath = anime.path("#education-path");
+
+    anime({
+      targets: "#airplane",
+      translateX: motionPath("x"),
+      translateY: motionPath("y"),
+      rotate: motionPath("angle"),
+      easing: "linear",
       duration: 12000,
-      ease: "linear",
       loop: true,
     });
-  };
-
-  document.addEventListener("DOMContentLoaded", initAnimation);
+  });
 </script>
 
 <style>
@@ -184,7 +193,7 @@ const sortedEducation = [...educationEntries].sort(
 
   .education-journey {
     position: relative;
-    height: 650px;
+    height: 700px;
     max-width: 1000px;
     margin: 0 auto;
     margin-top: var(--space-xl);
@@ -196,22 +205,13 @@ const sortedEducation = [...educationEntries].sort(
     left: 0;
     width: 100%;
     height: 100%;
-    z-index: 100; /* Bring SVG to front so Plane on top? But path creates visual clash if crossing text. 
-                   Since we routed path AROUND text, we can safely put it on top to ensure plane is visible. */
+    z-index: 5; /* Visible but controllable */
     pointer-events: none;
   }
 
-  /* Make just the path line fully transparent or semi to avoid obscuring? */
-  .flight-line {
-    /* kept visible as requested "dotted path" */
-  }
-
+  /* Entries */
   .edu-entry {
     position: absolute;
-    /* Z-index lower than plane (100) but markers need to be visible. Plane triggers z-index context? */
-    /* SVG is z-100. Entries z-10. */
-    /* If path crosses text now, it will be ON TOP of text. */
-    /* We routed path AROUND text, so this is safe and ensures Plane is visible. */
     z-index: 10;
     display: flex;
     align-items: flex-start;
@@ -226,14 +226,15 @@ const sortedEducation = [...educationEntries].sort(
     justify-content: center;
     background: var(--bg-primary);
     border-radius: 50%;
-    z-index: 20; /* Markers above path line */
+    z-index: 20;
   }
 
   /* 
-     CSS Positioning matching SVG Coords
+     Positions matching SVG Coords
      BNMIT: 50, 100
-     Christ: 950, 325
-     Oxford: 50, 550
+     Christ: 950, 350
+     Oxford: 50, 600
+     Offset -20 for center
   */
 
   .edu-bnmit {
@@ -242,12 +243,12 @@ const sortedEducation = [...educationEntries].sort(
   }
 
   .edu-christ {
-    top: 305px;
+    top: 330px;
     right: 30px;
   }
 
   .edu-oxford {
-    top: 530px;
+    top: 580px;
     left: 30px;
   }
 
@@ -263,8 +264,9 @@ const sortedEducation = [...educationEntries].sort(
     color: var(--accent-primary);
   }
 
+  /* Info */
   .edu-info {
-    max-width: 380px;
+    max-width: 400px;
     padding-top: 5px;
   }
 
@@ -274,7 +276,7 @@ const sortedEducation = [...educationEntries].sort(
 
   .edu-title {
     font-family: var(--font-serif);
-    font-size: 1.7rem;
+    font-size: 1.8rem;
     font-weight: 500;
     color: var(--text-primary);
     margin-bottom: 5px;
@@ -282,20 +284,20 @@ const sortedEducation = [...educationEntries].sort(
   }
 
   .edu-location {
-    font-size: 0.95rem;
+    font-size: 1rem;
     color: var(--gray-400);
     font-weight: 300;
   }
 
   .edu-degree {
-    font-size: 1.15rem;
+    font-size: 1.2rem;
     color: var(--text-secondary);
     margin-bottom: 4px;
     font-weight: 300;
   }
 
   .edu-score {
-    font-size: 1.1rem;
+    font-size: 1.15rem;
     color: var(--accent-primary);
     font-weight: 600;
   }
