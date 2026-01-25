@@ -22,7 +22,7 @@ const sortedProjects = [...projects].sort(
   <!-- Antigravity Background (Scrolls into view/Fixed behind) -->
   <div class="antigravity-bg">
     <Antigravity
-      client:visible
+      client:only="react"
       count={300}
       magnetRadius={6}
       ringRadius={7}
@@ -55,7 +55,7 @@ const sortedProjects = [...projects].sort(
 
         <div class="nav-socials">
           <a
-            href="https://linkedin.com"
+            href="https://www.linkedin.com/in/dimpana-jadhav/"
             target="_blank"
             rel="noopener"
             aria-label="LinkedIn"
@@ -67,7 +67,7 @@ const sortedProjects = [...projects].sort(
             </svg>
           </a>
           <a
-            href="https://github.com"
+            href="https://github.com/dimpanaa"
             target="_blank"
             rel="noopener"
             aria-label="GitHub"
@@ -275,7 +275,7 @@ const sortedProjects = [...projects].sort(
 
         <div class="social-links">
           <a
-            href="https://linkedin.com"
+            href="https://www.linkedin.com/in/dimpana-jadhav/"
             target="_blank"
             rel="noopener"
             aria-label="LinkedIn"
@@ -287,7 +287,7 @@ const sortedProjects = [...projects].sort(
             </svg>
           </a>
           <a
-            href="https://github.com"
+            href="https://github.com/dimpanaa"
             target="_blank"
             rel="noopener"
             aria-label="GitHub"
@@ -366,6 +366,10 @@ const sortedProjects = [...projects].sort(
   .nav {
     display: flex;
     gap: var(--space-xl);
+  }
+
+  .nav-socials {
+    display: none;
   }
 
   .nav a {
@@ -831,13 +835,24 @@ const sortedProjects = [...projects].sort(
 
   /* ===== RESPONSIVE ===== */
   @media (max-width: 768px) {
+    .header {
+      padding: 1rem 0;
+    }
+
+    .header .container {
+      align-items: center;
+      min-height: 60px;
+    }
+
     .nav {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background-color: #0a0a0a !important;
+      position: fixed !important;
+      top: 0 !important;
+      left: 0 !important;
+      right: 0 !important;
+      bottom: 0 !important;
+      width: 100% !important;
+      height: 100% !important;
+      min-height: 100vh !important;
       background: #0a0a0a !important;
       flex-direction: column;
       align-items: center;
@@ -845,11 +860,9 @@ const sortedProjects = [...projects].sort(
       gap: var(--space-lg);
       transform: translateX(100%);
       transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-      opacity: 1;
-      visibility: visible;
       padding: 2rem;
-      z-index: 999;
-      overflow-x: hidden;
+      z-index: 9999;
+      overflow: hidden !important;
     }
 
     .nav.active {
@@ -887,21 +900,23 @@ const sortedProjects = [...projects].sort(
     }
 
     .nav a {
-      font-size: 1.8rem;
+      font-size: 2rem;
+      font-weight: 400;
     }
 
     .hamburger {
       display: flex;
       flex-direction: column;
       justify-content: center;
-      gap: 6px;
-      z-index: 1000;
+      align-items: center;
+      gap: 5px;
+      z-index: 10000;
       color: var(--text-primary);
-      width: 40px;
-      height: 40px;
-      padding: 5px;
+      width: 44px;
+      height: 44px;
+      padding: 0;
       position: relative;
-      margin-top: 5px;
+      flex-shrink: 0;
     }
 
     .hamburger span {
