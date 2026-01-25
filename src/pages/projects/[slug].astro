@@ -1,0 +1,224 @@
+---
+// Dynamic project detail page
+import Layout from "../../layouts/Layout.astro";
+import { getCollection } from "astro:content";
+
+export async function getStaticPaths() {
+  const projects = await getCollection("projects");
+  return projects.map((project) => ({
+    params: { slug: project.slug },
+    props: { project },
+  }));
+}
+
+const { project } = Astro.props;
+const { Content } = await project.render();
+---
+
+<Layout title={`${project.data.title} | Dimpana Jadhav`}>
+  <div class="project-page">
+    <div class="container">
+      <a href="/#portfolio" class="back-link">
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+        >
+          <polyline points="15 18 9 12 15 6"></polyline>
+        </svg>
+        Back to Portfolio
+      </a>
+
+      <article class="project-content">
+        <header class="project-header">
+          <h1 class="project-title">{project.data.title}</h1>
+          <p class="project-description">{project.data.description}</p>
+          <div class="project-tags">
+            {
+              project.data.tags.map((tag: string) => (
+                <span class="tag">{tag}</span>
+              ))
+            }
+          </div>
+        </header>
+
+        {
+          project.data.image && (
+            <div class="project-image">
+              <img src={project.data.image} alt={project.data.title} />
+            </div>
+          )
+        }
+
+        <div class="project-body">
+          <Content />
+        </div>
+      </article>
+    </div>
+  </div>
+</Layout>
+
+<style>
+  .project-page {
+    background: var(--bg-primary);
+    min-height: 100vh;
+    padding: 100px 0 60px;
+  }
+
+  .container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 var(--space-lg);
+  }
+
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-size: 0.95rem;
+    margin-bottom: 40px;
+    transition: color 0.2s;
+  }
+
+  .back-link:hover {
+    color: var(--accent-primary);
+  }
+
+  .back-link svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .project-header {
+    margin-bottom: 40px;
+  }
+
+  .project-title {
+    font-family: var(--font-serif);
+    font-size: 2.5rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin: 0 0 16px 0;
+    line-height: 1.2;
+  }
+
+  .project-description {
+    font-size: 1.2rem;
+    color: var(--text-secondary);
+    margin: 0 0 20px 0;
+    line-height: 1.6;
+  }
+
+  .project-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .tag {
+    background: rgba(255, 59, 48, 0.1);
+    color: var(--accent-primary);
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 500;
+  }
+
+  .project-image {
+    margin-bottom: 40px;
+    border-radius: 12px;
+    overflow: hidden;
+  }
+
+  .project-image img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  .project-body {
+    color: var(--text-secondary);
+    font-size: 1.1rem;
+    line-height: 1.8;
+  }
+
+  .project-body :global(h2) {
+    font-family: var(--font-serif);
+    font-size: 1.6rem;
+    color: var(--text-primary);
+    margin: 40px 0 16px 0;
+  }
+
+  .project-body :global(h3) {
+    font-size: 1.3rem;
+    color: var(--text-primary);
+    margin: 32px 0 12px 0;
+  }
+
+  .project-body :global(p) {
+    margin: 0 0 20px 0;
+  }
+
+  .project-body :global(ul),
+  .project-body :global(ol) {
+    margin: 0 0 20px 0;
+    padding-left: 24px;
+  }
+
+  .project-body :global(li) {
+    margin-bottom: 8px;
+  }
+
+  .project-body :global(a) {
+    color: var(--accent-primary);
+    text-decoration: none;
+  }
+
+  .project-body :global(a:hover) {
+    text-decoration: underline;
+  }
+
+  .project-body :global(code) {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 0.9em;
+  }
+
+  .project-body :global(pre) {
+    background: rgba(255, 255, 255, 0.03);
+    padding: 20px;
+    border-radius: 8px;
+    overflow-x: auto;
+    margin-bottom: 20px;
+  }
+
+  .project-body :global(blockquote) {
+    border-left: 3px solid var(--accent-primary);
+    padding-left: 20px;
+    margin: 20px 0;
+    color: var(--gray-400);
+    font-style: italic;
+  }
+
+  @media (max-width: 600px) {
+    .project-page {
+      padding: 80px 0 40px;
+    }
+
+    .project-title {
+      font-size: 1.8rem;
+    }
+
+    .project-description {
+      font-size: 1.05rem;
+    }
+
+    .project-body {
+      font-size: 1rem;
+    }
+  }
+</style>

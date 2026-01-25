@@ -1,6 +1,5 @@
 ---
-// Education component - F1 Track Layout with animejs v4 createMotionPath
-// Path curves AROUND text blocks, not through them
+// Education component - Clean Timeline Layout
 import { getCollection } from "astro:content";
 
 const educationEntries = await getCollection("education");
@@ -13,375 +12,164 @@ const sortedEducation = [...educationEntries].sort(
   <div class="container">
     <h2 class="section-title">Education</h2>
 
-    <div class="education-journey">
-      <!-- SVG Path Layer -->
-      <svg
-        class="flight-path-svg"
-        viewBox="0 0 1000 700"
-        preserveAspectRatio="xMidYMid meet"
-      >
-        <!-- 
-           Flight Path Design with simple loop:
-           - Oxford at (450, 550): Starting point
-           - Loop between Oxford and Christ: simple elliptical loop
-           - Reaches Christ at (950, 350): Checkpoint
-           - Then continues to BNMIT at (450, 100): Final destination
-           - Path curves AROUND text blocks, not through them
-        -->
-        <path
-          class="flight-line"
-          id="education-path"
-          d="M 450 550
-             C 500 540, 550 530, 600 520
-             C 650 510, 700 500, 750 490
-             C 800 480, 850 470, 900 460
-             C 920 450, 940 400, 950 380
-             C 955 370, 955 360, 950 350
-             C 940 340, 920 330, 900 320
-             C 850 310, 800 300, 750 290
-             C 700 280, 650 270, 600 260
-             C 550 250, 500 240, 450 230
-             C 400 220, 350 210, 300 200
-             C 250 190, 200 180, 150 170
-             C 100 160, 50 150, 0 140
-             C 50 130, 100 120, 150 110
-             C 200 100, 250 90, 300 80
-             C 350 70, 400 60, 450 50
-             C 500 40, 550 30, 600 20
-             C 650 10, 700 0, 750 10
-             C 800 20, 850 30, 900 40
-             C 920 50, 940 60, 950 70
-             C 955 80, 955 90, 950 100
-             C 940 110, 920 120, 900 130
-             C 850 140, 800 150, 750 160
-             C 700 170, 650 180, 600 190
-             C 550 200, 500 210, 450 220
-             C 400 230, 350 240, 300 250
-             C 250 260, 200 270, 150 280
-             C 100 290, 50 300, 0 310
-             C 50 300, 100 290, 150 280
-             C 200 270, 250 260, 300 250
-             C 350 240, 400 230, 450 220
-             C 500 210, 550 200, 600 190
-             C 650 180, 700 170, 750 160
-             C 800 150, 850 140, 900 130
-             C 920 120, 940 110, 950 100
-             C 955 90, 955 80, 950 70
-             C 940 60, 920 50, 900 40
-             C 850 30, 800 20, 750 10
-             C 700 0, 650 10, 600 20
-             C 550 30, 500 40, 450 50
-             C 400 60, 350 70, 300 80
-             C 250 90, 200 100, 150 110
-             C 100 120, 50 130, 0 140
-             C 50 150, 100 160, 150 170
-             C 200 180, 250 190, 300 200
-             C 350 210, 400 220, 450 230
-             C 500 240, 550 250, 600 260
-             C 650 270, 700 280, 750 290
-             C 800 300, 850 310, 900 320
-             C 920 330, 940 340, 950 350
-             C 850 280, 700 200, 550 150
-             C 500 130, 470 115, 450 100"
-          fill="none"
-          stroke="rgba(255, 255, 255, 0.4)"
-          stroke-width="2.5"
-          stroke-dasharray="8 10"
-          stroke-linecap="round"
-          stroke-linejoin="round"></path>
-
-        <!-- Airplane -->
-        <g id="airplane" class="plane">
-          <path
-            d="M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z"
-            fill="white"
-            transform="scale(1.2) translate(-12, -12)"></path>
-        </g>
-      </svg>
-
-      <!-- 1. BNMIT (Top) - Text LEFT, Marker RIGHT -->
-      <div class="edu-entry edu-bnmit">
-        <div class="edu-info">
-          <h3 class="edu-title">
-            {sortedEducation[0]?.data.institution}
-            <span class="edu-location"
-              >({sortedEducation[0]?.data.location})</span
-            >
-          </h3>
-          <p class="edu-degree">{sortedEducation[0]?.data.degree}</p>
-          <p class="edu-score">{sortedEducation[0]?.data.score}</p>
-        </div>
-        <div class="marker-wrapper">
-          <svg
-            class="location-marker current"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="1.5"
-          >
-            <path d="M12 21c-4-4-8-7.5-8-12a8 8 0 1 1 16 0c0 4.5-4 8-8 12z"
-            ></path>
-            <circle cx="12" cy="9" r="3"></circle>
-          </svg>
-        </div>
-      </div>
-
-      <!-- 2. Christ Junior (Right) - Text LEFT, Marker RIGHT -->
-      <div class="edu-entry edu-christ">
-        <div class="edu-info align-right">
-          <h3 class="edu-title">
-            {sortedEducation[1]?.data.institution}
-            <span class="edu-location"
-              >({sortedEducation[1]?.data.location})</span
-            >
-          </h3>
-          <p class="edu-degree">{sortedEducation[1]?.data.degree}</p>
-          <p class="edu-score">{sortedEducation[1]?.data.score}</p>
-        </div>
-        <div class="marker-wrapper">
-          <svg
-            class="location-marker"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="1.5"
-          >
-            <path d="M12 21c-4-4-8-7.5-8-12a8 8 0 1 1 16 0c0 4.5-4 8-8 12z"
-            ></path>
-            <circle cx="12" cy="9" r="3"></circle>
-          </svg>
-        </div>
-      </div>
-
-      <!-- 3. Oxford (Bottom) - Text LEFT, Marker RIGHT -->
-      <div class="edu-entry edu-oxford">
-        <div class="edu-info">
-          <h3 class="edu-title">
-            {sortedEducation[2]?.data.institution}
-            <span class="edu-location"
-              >({sortedEducation[2]?.data.location})</span
-            >
-          </h3>
-          <p class="edu-degree">{sortedEducation[2]?.data.degree}</p>
-          <p class="edu-score">{sortedEducation[2]?.data.score}</p>
-        </div>
-        <div class="marker-wrapper">
-          <svg
-            class="location-marker"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="1.5"
-          >
-            <path d="M12 21c-4-4-8-7.5-8-12a8 8 0 1 1 16 0c0 4.5-4 8-8 12z"
-            ></path>
-            <circle cx="12" cy="9" r="3"></circle>
-          </svg>
-        </div>
-      </div>
+    <div class="education-timeline">
+      {
+        sortedEducation.map((edu) => (
+          <div class={`timeline-item ${edu.data.isCurrent ? "current" : ""}`}>
+            <div class="timeline-marker" />
+            <div class="timeline-content">
+              <div class="timeline-header">
+                <h3 class="institution">{edu.data.institution}</h3>
+                <span class="year-badge">
+                  {edu.data.startYear} - {edu.data.endYear}
+                </span>
+              </div>
+              <p class="degree">{edu.data.degree}</p>
+              <p class="location">{edu.data.location}</p>
+              <p class="score">{edu.data.score}</p>
+            </div>
+          </div>
+        ))
+      }
     </div>
   </div>
 </section>
-
-<script>
-  import { animate, svg } from 'animejs';
-
-  // Wait for DOM to be ready
-  if (typeof window !== 'undefined') {
-    const initAnimation = () => {
-      const path = document.getElementById("education-path");
-      const airplane = document.getElementById("airplane");
-
-      if (!path || !airplane) {
-        // Retry if elements aren't ready yet
-        setTimeout(initAnimation, 100);
-        return;
-      }
-
-      // Make plane visible
-      airplane.style.opacity = '1';
-      airplane.style.display = 'block';
-
-      // Animate the plane following the motion path using animejs v4 createMotionPath
-      // Using selector string as in reference code
-      animate('#airplane', {
-        ease: 'linear',
-        duration: 10000,
-        loop: true,
-        ...svg.createMotionPath('#education-path')
-      });
-
-      // Line drawing animation following the motion path (for visual effect)
-      animate(svg.createDrawable('#education-path'), {
-        draw: '0 1',
-        ease: 'linear',
-        duration: 10000,
-        loop: true,
-      });
-    };
-
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', initAnimation);
-    } else {
-      initAnimation();
-    }
-  }
-</script>
 
 <style>
   .education {
     background: var(--bg-primary);
   }
 
-  .education-journey {
+  .education-timeline {
     position: relative;
-    height: 700px;
-    max-width: 1000px;
+    max-width: 800px;
     margin: 0 auto;
-    margin-top: var(--space-xl);
+    padding-left: 40px;
   }
 
-  .flight-path-svg {
+  /* Vertical line */
+  .education-timeline::before {
+    content: "";
     position: absolute;
+    left: 8px;
     top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 5;
-    pointer-events: none;
+    bottom: 0;
+    width: 2px;
+    background: linear-gradient(
+      to bottom,
+      var(--accent-primary),
+      var(--gray-600)
+    );
   }
 
-  .plane {
-    transform-origin: 0 0;
-    opacity: 1;
+  .timeline-item {
+    position: relative;
+    padding-bottom: 40px;
   }
 
-  #airplane {
-    opacity: 1;
-    display: block;
+  .timeline-item:last-child {
+    padding-bottom: 0;
   }
 
-  .edu-entry {
+  .timeline-marker {
     position: absolute;
-    z-index: 1;
+    left: -40px;
+    top: 4px;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: var(--bg-primary);
+    border: 3px solid var(--gray-500);
+  }
+
+  .timeline-item.current .timeline-marker {
+    border-color: var(--accent-primary);
+    background: var(--accent-primary);
+    box-shadow: 0 0 12px rgba(255, 59, 48, 0.4);
+  }
+
+  .timeline-content {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    padding: 24px;
+    transition: all 0.3s ease;
+  }
+
+  .timeline-content:hover {
+    background: rgba(255, 255, 255, 0.04);
+    border-color: rgba(255, 255, 255, 0.1);
+    transform: translateX(4px);
+  }
+
+  .timeline-header {
     display: flex;
+    justify-content: space-between;
     align-items: flex-start;
     gap: 16px;
+    margin-bottom: 12px;
+    flex-wrap: wrap;
   }
 
-  .marker-wrapper {
-    flex-shrink: 0;
-    width: 44px;
-    height: 44px;
-    background: var(--bg-primary);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    z-index: 15;
-  }
-
-  .location-marker {
-    width: 44px;
-    height: 44px;
-    color: var(--text-primary);
-  }
-
-  .location-marker.current {
-    color: var(--accent-primary);
-  }
-
-  /* 
-     Positions - Markers at SVG coords, text extends LEFT
-     Path goes to RIGHT of all markers
-     
-     BNMIT: SVG (450, 100) 
-     Christ: SVG (950, 350)
-     Oxford: SVG (450, 550)
-  */
-
-  .edu-bnmit {
-    top: 78px;
-    left: 50px;
-    /* Marker at right edge = approximately 50 + text width + gap + marker = 450ish */
-  }
-
-  .edu-christ {
-    top: 328px;
-    right: 30px;
-    /* Marker on right edge at 950ish */
-  }
-
-  .edu-oxford {
-    top: 528px;
-    left: 50px;
-  }
-
-  .edu-info {
-    max-width: 350px;
-    padding-top: 4px;
-    position: relative;
-    z-index: 1;
-    background: var(--bg-primary);
-    padding: 4px 8px;
-    border-radius: 4px;
-  }
-
-  .edu-info.align-right {
-    text-align: right;
-  }
-
-  .edu-title {
+  .institution {
     font-family: var(--font-serif);
-    font-size: 1.7rem;
+    font-size: 1.4rem;
     font-weight: 500;
     color: var(--text-primary);
-    margin-bottom: 4px;
-    line-height: 1.25;
+    margin: 0;
   }
 
-  .edu-location {
+  .year-badge {
+    font-size: 0.85rem;
+    color: var(--accent-primary);
+    background: rgba(255, 59, 48, 0.1);
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-weight: 500;
+    white-space: nowrap;
+  }
+
+  .degree {
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+    margin: 0 0 6px 0;
+  }
+
+  .location {
     font-size: 0.95rem;
     color: var(--gray-400);
-    font-weight: 300;
-    margin-left: 6px;
+    margin: 0 0 8px 0;
   }
 
-  .edu-degree {
-    font-size: 1.15rem;
-    color: var(--text-secondary);
-    margin-bottom: 3px;
-  }
-
-  .edu-score {
-    font-size: 1.1rem;
+  .score {
+    font-size: 1rem;
     color: var(--accent-primary);
     font-weight: 600;
+    margin: 0;
   }
 
-  /* Mobile */
-  @media (max-width: 900px) {
-    .education-journey {
-      height: auto;
-      display: flex;
+  @media (max-width: 600px) {
+    .education-timeline {
+      padding-left: 30px;
+    }
+
+    .timeline-marker {
+      left: -30px;
+      width: 14px;
+      height: 14px;
+    }
+
+    .timeline-header {
       flex-direction: column;
-      gap: 50px;
-      padding: 30px 20px;
+      gap: 8px;
     }
 
-    .flight-path-svg {
-      display: none;
+    .institution {
+      font-size: 1.2rem;
     }
 
-    .edu-entry {
-      position: static;
-      flex-direction: row !important;
-    }
-
-    .edu-info,
-    .edu-info.align-right {
-      text-align: left;
+    .timeline-content {
+      padding: 18px;
     }
   }
 </style>

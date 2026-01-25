@@ -1,0 +1,204 @@
+---
+// Certifications & Achievements component
+import { getCollection } from "astro:content";
+
+const certifications = await getCollection("certifications");
+const achievements = await getCollection("achievements");
+
+const sortedCerts = [...certifications].sort(
+  (a, b) => (a.data.order as number) - (b.data.order as number),
+);
+const sortedAchievements = [...achievements].sort(
+  (a, b) => (a.data.order as number) - (b.data.order as number),
+);
+
+const hasCerts = sortedCerts.length > 0;
+const hasAchievements = sortedAchievements.length > 0;
+---
+
+{
+  (hasCerts || hasAchievements) && (
+    <section class="section credentials" id="credentials">
+      <div class="container">
+        <h2 class="section-title">Certifications & Achievements</h2>
+
+        <div class="credentials-grid">
+          {hasCerts && (
+            <div class="credentials-column">
+              <h3 class="column-title">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+                  <line x1="16" y1="2" x2="16" y2="6" />
+                  <line x1="8" y1="2" x2="8" y2="6" />
+                  <line x1="3" y1="10" x2="21" y2="10" />
+                </svg>
+                Certifications
+              </h3>
+              <div class="card-list">
+                {sortedCerts.map((cert) => (
+                  <div class="credential-card">
+                    <h4 class="card-title">{cert.data.title}</h4>
+                    <p class="card-issuer">{cert.data.issuer}</p>
+                    <p class="card-date">{cert.data.date}</p>
+                    {cert.data.credentialUrl && (
+                      <a
+                        href={cert.data.credentialUrl}
+                        target="_blank"
+                        rel="noopener"
+                        class="card-link"
+                      >
+                        View Credential →
+                      </a>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {hasAchievements && (
+            <div class="credentials-column">
+              <h3 class="column-title">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <circle cx="12" cy="8" r="7" />
+                  <polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88" />
+                </svg>
+                Achievements
+              </h3>
+              <div class="card-list">
+                {sortedAchievements.map((ach) => (
+                  <div class="credential-card achievement">
+                    <h4 class="card-title">{ach.data.title}</h4>
+                    <p class="card-description">{ach.data.description}</p>
+                    <p class="card-date">{ach.data.date}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+    </section>
+  )
+}
+
+<style>
+  .credentials {
+    background: var(--bg-primary);
+  }
+
+  .credentials-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 40px;
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+
+  .credentials-column {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .column-title {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-family: var(--font-serif);
+    font-size: 1.3rem;
+    font-weight: 500;
+    color: var(--text-primary);
+    margin: 0 0 8px 0;
+  }
+
+  .column-title svg {
+    width: 24px;
+    height: 24px;
+    color: var(--accent-primary);
+  }
+
+  .card-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .credential-card {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    padding: 20px;
+    transition: all 0.3s ease;
+  }
+
+  .credential-card:hover {
+    background: rgba(255, 255, 255, 0.04);
+    border-color: rgba(255, 255, 255, 0.1);
+    transform: translateY(-2px);
+  }
+
+  .credential-card.achievement {
+    border-left: 3px solid var(--accent-primary);
+  }
+
+  .card-title {
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: var(--text-primary);
+    margin: 0 0 8px 0;
+  }
+
+  .card-issuer {
+    font-size: 0.95rem;
+    color: var(--accent-primary);
+    margin: 0 0 4px 0;
+  }
+
+  .card-description {
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    margin: 0 0 8px 0;
+    line-height: 1.5;
+  }
+
+  .card-date {
+    font-size: 0.85rem;
+    color: var(--gray-400);
+    margin: 0;
+  }
+
+  .card-link {
+    display: inline-block;
+    margin-top: 12px;
+    font-size: 0.9rem;
+    color: var(--accent-primary);
+    text-decoration: none;
+    font-weight: 500;
+    transition: opacity 0.2s;
+  }
+
+  .card-link:hover {
+    opacity: 0.8;
+  }
+
+  @media (max-width: 600px) {
+    .credentials-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .credential-card {
+      padding: 16px;
+    }
+  }
+</style>

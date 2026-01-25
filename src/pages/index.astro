@@ -2,6 +2,8 @@
 import Layout from "../layouts/Layout.astro";
 import V8Engine from "../components/V8Engine.astro";
 import Education from "../components/Education.astro";
+import Experience from "../components/Experience.astro";
+import Certifications from "../components/Certifications.astro";
 import { getCollection } from "astro:content";
 
 // Fetch projects from content collection, sorted by order
@@ -22,7 +24,9 @@ const sortedProjects = [...projects].sort(
       <nav class="nav" id="main-nav">
         <a href="#about">About</a>
         <a href="#portfolio">Portfolio</a>
+        <a href="#experience">Experience</a>
         <a href="#education">Education</a>
+        <a href="#credentials">Credentials</a>
         <a href="#contact">Contact</a>
       </nav>
       <button class="hamburger" id="hamburger" aria-label="Toggle menu">
@@ -127,47 +131,50 @@ const sortedProjects = [...projects].sort(
         {
           sortedProjects.map((project) => (
             <article class="project-card">
-              <div class="project-image">
-                <div class="project-placeholder">
-                  <svg viewBox="0 0 100 100" fill="none">
-                    <rect
-                      x="20"
-                      y="30"
-                      width="60"
-                      height="40"
-                      rx="5"
-                      stroke="currentColor"
-                      stroke-width="2"
-                      fill="none"
-                    />
-                    <circle
-                      cx="35"
-                      cy="70"
-                      r="8"
-                      stroke="currentColor"
-                      stroke-width="2"
-                      fill="none"
-                    />
-                    <circle
-                      cx="65"
-                      cy="70"
-                      r="8"
-                      stroke="currentColor"
-                      stroke-width="2"
-                      fill="none"
-                    />
-                  </svg>
+              <a href={`/projects/${project.slug}`} class="project-link">
+                <div class="project-image">
+                  <div class="project-placeholder">
+                    <svg viewBox="0 0 100 100" fill="none">
+                      <rect
+                        x="20"
+                        y="30"
+                        width="60"
+                        height="40"
+                        rx="5"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        fill="none"
+                      />
+                      <circle
+                        cx="35"
+                        cy="70"
+                        r="8"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        fill="none"
+                      />
+                      <circle
+                        cx="65"
+                        cy="70"
+                        r="8"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        fill="none"
+                      />
+                    </svg>
+                  </div>
                 </div>
-              </div>
-              <div class="project-info">
-                <h3>{project.data.title}</h3>
-                <p>{project.data.description}</p>
-                <div class="project-tags">
-                  {project.data.tags.map((tag: string) => (
-                    <span>{tag}</span>
-                  ))}
+                <div class="project-info">
+                  <h3>{project.data.title}</h3>
+                  <p>{project.data.description}</p>
+                  <div class="project-tags">
+                    {project.data.tags.map((tag: string) => (
+                      <span>{tag}</span>
+                    ))}
+                  </div>
+                  <span class="view-details">View Details →</span>
                 </div>
-              </div>
+              </a>
             </article>
           ))
         }
@@ -175,8 +182,14 @@ const sortedProjects = [...projects].sort(
     </div>
   </section>
 
-  <!-- Education Section - Animated Flight Path -->
+  <!-- Experience Section -->
+  <Experience />
+
+  <!-- Education Section -->
   <Education />
+
+  <!-- Certifications & Achievements -->
+  <Certifications />
 
   <!-- Contact Section -->
   <section class="section contact" id="contact">
@@ -552,6 +565,25 @@ const sortedProjects = [...projects].sort(
     color: var(--accent-primary);
     text-transform: uppercase;
     letter-spacing: 0.05em;
+  }
+
+  .project-link {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .view-details {
+    display: inline-block;
+    margin-top: var(--space-md);
+    color: var(--accent-primary);
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: opacity 0.2s;
+  }
+
+  .project-card:hover .view-details {
+    opacity: 0.8;
   }
 
   /* ===== EDUCATION - FIXED TIMELINE ===== */
