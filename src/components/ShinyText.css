@@ -1,0 +1,7 @@
+/* ShinyText.css - not strictly needed if we inline styles but good for separation */
+.shiny-text {
+  display: inline-block;
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}

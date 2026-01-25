@@ -4,6 +4,7 @@ import V8Engine from "../components/V8Engine.astro";
 import Education from "../components/Education.astro";
 import Experience from "../components/Experience.astro";
 import Certifications from "../components/Certifications.astro";
+import ShinyText from "../components/ShinyText.jsx";
 import { getCollection } from "astro:content";
 
 // Fetch projects from content collection, sorted by order
@@ -44,8 +45,22 @@ const sortedProjects = [...projects].sort(
         <div class="hero-content">
           <h1 class="hero-title animate-fade-in">
             Hi there!<br />
-            I am <span>Dimpana</span> and<br />
-            I love to create.
+            I am <span class="dimpana-text">
+              <ShinyText
+                client:load
+                text="Dimpana"
+                disabled={false}
+                speed={1.5}
+                delay={0}
+                color="#b5b5b5"
+                shineColor="#ffffff"
+                hoverOnly={true}
+              />
+            </span>
+            <span class="hero-suffix"
+              ><span class="desktop-space"> </span>and<br class="desktop-br" /> I
+              love to create.</span
+            >
           </h1>
           <div class="hero-badge animate-fade-in animate-delay-2">
             <span>Dimpana P Jadhav</span>
@@ -269,7 +284,15 @@ const sortedProjects = [...projects].sort(
     right: 0;
     z-index: 100;
     padding: var(--space-md) 0;
-    background: linear-gradient(to bottom, var(--bg-primary), transparent);
+    background: linear-gradient(
+      to bottom,
+      rgba(18, 18, 18, 0.95) 0%,
+      rgba(18, 18, 18, 0.85) 50%,
+      rgba(18, 18, 18, 0.6) 80%,
+      transparent 100%
+    );
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
   }
 
   .header .container {
@@ -350,6 +373,13 @@ const sortedProjects = [...projects].sort(
     font-style: italic;
     line-height: 1.15;
     margin-bottom: var(--space-xl);
+  }
+
+  .dimpana-text {
+    display: inline-block;
+    font-weight: 700;
+    font-size: 1.1em;
+    letter-spacing: 0.1em;
   }
 
   .hero-badge {
@@ -739,6 +769,7 @@ const sortedProjects = [...projects].sort(
     .hamburger {
       display: flex;
       z-index: 101;
+      color: var(--text-primary);
     }
 
     .hamburger.active span:nth-child(1) {
@@ -760,6 +791,34 @@ const sortedProjects = [...projects].sort(
 
     .hero-content {
       order: 2;
+      transform: none;
+      padding: 0 var(--space-md);
+    }
+
+    .hero-title {
+      font-size: clamp(2rem, 8vw, 3rem);
+      line-height: 1.3;
+    }
+
+    .dimpana-text {
+      display: block;
+      margin: 5px auto;
+      width: auto;
+      font-size: 1.1em;
+      letter-spacing: normal;
+    }
+
+    .hero-suffix {
+      display: block;
+      margin-top: 5px;
+    }
+
+    .desktop-br {
+      display: none;
+    }
+
+    .desktop-space {
+      display: none;
     }
 
     .hero-image {
@@ -767,8 +826,9 @@ const sortedProjects = [...projects].sort(
     }
 
     .image-oval {
-      width: 220px;
-      height: 280px;
+      width: 200px;
+      height: 260px;
+      transform: none;
     }
 
     .hero-badge {
