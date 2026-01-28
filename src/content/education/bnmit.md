@@ -2,7 +2,7 @@
 institution: "B N M Institute of Technology"
 location: "BLR"
 degree: "B.E. Mechanical Engineering"
-score: "CGPA: 9.11"
+score: "CGPA: 9.14"
 startYear: "2022"
 endYear: "Present"
 isCurrent: true
