@@ -1,10 +1,10 @@
 ---
 institution: "Christ Junior College"
-location: "BLR"
+location: "Bengaluru, India"
 degree: "Pre University Course"
 score: "Percentage: 86.5%"
-startYear: "2020"
-endYear: "2022"
+startYear: "2021"
+endYear: "2023"
 isCurrent: false
 order: 2
 ---
