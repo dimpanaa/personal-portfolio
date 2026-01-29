@@ -1,9 +1,9 @@
 ---
 title: "Gear Mechanism"
-description: "Complex gear train design for industrial applications"
+description: "A complex gear train design optimized for industrial applications. Created using Fusion 360 with detailed simulations to verify mechanical performance and durability under various operating conditions."
 tags: ["Fusion 360", "Simulation"]
 featured: true
 order: 3
 ---
 
-A complex gear train design optimized for industrial applications. Created using Fusion 360 with detailed simulations to verify mechanical performance and durability under various operating conditions.
+Complex gear train design for industrial applications
