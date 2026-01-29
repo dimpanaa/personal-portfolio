@@ -761,8 +761,8 @@ const sortedProjects = [...projects].sort(
   }
 
   .btn-large {
-    padding: var(--space-lg) var(--space-2xl);
-    font-size: 1.1rem;
+    padding: var(--space-md) var(--space-xl);
+    font-size: 1rem;
   }
 
   .social-links {
@@ -807,11 +807,13 @@ const sortedProjects = [...projects].sort(
     z-index: 1;
   }
 
+  :global(.about),
+  :global(.portfolio),
   :global(.education),
   :global(.experience),
   :global(.credentials),
-  :global(.projects) {
-    background: rgba(10, 10, 10, 0.6) !important;
+  :global(.contact) {
+    background: rgba(10, 10, 10, var(--section-opacity)) !important;
     backdrop-filter: blur(10px);
   }
 
