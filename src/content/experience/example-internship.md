@@ -1,9 +1,9 @@
 ---
-company: "Example Company"
-role: "Mechanical Engineering Intern"
-location: "Bangalore"
-startDate: "June 2023"
-endDate: "August 2023"
+company: "Vayudhwajai-m Aerospace"
+role: "Mechanical Engineering Trainee Intern"
+location: "Hybrid"
+startDate: "August 2025"
+endDate: "September 2025"
 isCurrent: false
 order: 1
 ---
