@@ -1,10 +1,10 @@
 ---
 institution: "B N M Institute of Technology"
-location: "BLR"
+location: "Bengaluru, India"
 degree: "B.E. Mechanical Engineering"
 score: "CGPA: 9.14"
-startYear: "2022"
-endYear: "Present"
+startYear: "2023"
+endYear: "2027"
 isCurrent: true
 order: 1
 ---

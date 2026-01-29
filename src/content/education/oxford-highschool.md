@@ -1,10 +1,10 @@
 ---
 institution: "The Oxford English Highschool"
-location: "BLR"
+location: "Bengaluru, India"
 degree: "SSLC Examination"
 score: "Percentage: 95.67%"
-startYear: "2020"
-endYear: "2020"
+startYear: "2011"
+endYear: "2021"
 isCurrent: false
 order: 3
 ---
