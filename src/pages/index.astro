@@ -13,6 +13,10 @@ const projects = await getCollection("projects");
 const sortedProjects = [...projects].sort(
   (a, b) => (a.data.order as number) - (b.data.order as number),
 );
+
+// Fetch social links
+import { getEntry } from "astro:content";
+const socials = await getEntry("socials", "links");
 ---
 
 <Layout title="Dimpana Jadhav | Mechanical Engineer & Creator">
@@ -54,8 +58,9 @@ const sortedProjects = [...projects].sort(
         <a href="#contact">Contact</a>
 
         <div class="nav-socials">
+          {socials?.data.linkedin && (
           <a
-            href="https://www.linkedin.com/in/dimpana-jadhav/"
+            href={socials.data.linkedin}
             target="_blank"
             rel="noopener"
             aria-label="LinkedIn"
@@ -66,8 +71,10 @@ const sortedProjects = [...projects].sort(
               ></path>
             </svg>
           </a>
+          )}
+          {socials?.data.github && (
           <a
-            href="https://github.com/dimpanaa"
+            href={socials.data.github}
             target="_blank"
             rel="noopener"
             aria-label="GitHub"
@@ -78,6 +85,7 @@ const sortedProjects = [...projects].sort(
               ></path>
             </svg>
           </a>
+          )}
         </div>
       </nav>
       <button class="hamburger" id="hamburger" aria-label="Toggle menu">
@@ -254,7 +262,7 @@ const sortedProjects = [...projects].sort(
 
       <div class="contact-content">
         <a
-          href="mailto:dimpana.jadhav@example.com"
+          href={`mailto:${socials?.data.email}`}
           class="btn btn-primary btn-large"
         >
           <svg
@@ -274,8 +282,9 @@ const sortedProjects = [...projects].sort(
         </a>
 
         <div class="social-links">
+          {socials?.data.linkedin && (
           <a
-            href="https://www.linkedin.com/in/dimpana-jadhav/"
+            href={socials.data.linkedin}
             target="_blank"
             rel="noopener"
             aria-label="LinkedIn"
@@ -286,8 +295,10 @@ const sortedProjects = [...projects].sort(
               ></path>
             </svg>
           </a>
+          )}
+          {socials?.data.github && (
           <a
-            href="https://github.com/dimpanaa"
+            href={socials.data.github}
             target="_blank"
             rel="noopener"
             aria-label="GitHub"
@@ -298,8 +309,10 @@ const sortedProjects = [...projects].sort(
               ></path>
             </svg>
           </a>
+          )}
+          {socials?.data.instagram && (
           <a
-            href="https://instagram.com"
+            href={socials.data.instagram}
             target="_blank"
             rel="noopener"
             aria-label="Instagram"

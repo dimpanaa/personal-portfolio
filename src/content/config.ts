@@ -65,10 +65,22 @@ const achievementsCollection = defineCollection({
   }),
 });
 
+// Socials collection schema
+const socialsCollection = defineCollection({
+  type: "content",
+  schema: z.object({
+    email: z.string().email(),
+    linkedin: z.string().url().optional(),
+    github: z.string().url().optional(),
+    instagram: z.string().url().optional(),
+  }),
+});
+
 export const collections = {
   projects: projectsCollection,
   education: educationCollection,
   experience: experienceCollection,
   certifications: certificationsCollection,
   achievements: achievementsCollection,
+  socials: socialsCollection,
 };
