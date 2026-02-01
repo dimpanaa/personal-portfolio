@@ -1,6 +1,6 @@
 ---
 title: "V8 Engine"
-description: " Mechanical Design & Additive Manufacturing"
+description: "Mechanical Design & Additive Manufacturing"
 tags:
   [
     "SolidWorks",

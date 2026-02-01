@@ -1,5 +1,5 @@
 ---
-title: "UAV simulationgit "
+title: "UAV simulation"
 description: "Design and Simulation of a Low-Speed Fixed-Wing UAV"
 tags: ["CFD", "MATLAB", "Solidworks", "Simulation", "Analysis"]
 featured: true
