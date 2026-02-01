@@ -74,6 +74,14 @@ description: "Brief description of the project"
 tags: ["Tag1", "Tag2", "Tag3"]
 featured: true
 order: 5
+coverImage: "/images/projects/my-project-cover.jpg"
+gallery:
+  - type: "image"
+    src: "/images/projects/my-project-detail.jpg"
+    caption: "Optional caption for this image"
+  - type: "video"
+    src: "/videos/projects/my-project-demo.mp4"
+    caption: "Video demonstration"
 ---
 
 Optional extended description of your project.
@@ -88,6 +96,18 @@ You can write as much as you want here using markdown.
 | `tags` | ✅ Yes | Array of technology/skill tags |
 | `featured` | No | Set to `true` to highlight (default: `false`) |
 | `order` | No | Display order - lower numbers appear first (default: `100`) |
+| `coverImage` | No | Path to card thumbnail (e.g., `/images/projects/cover.jpg`) |
+| `gallery` | No | Array of images/videos shown on project detail page (see below) |
+
+**Gallery item format:**
+| Field | Required | Description |
+|-------|----------|-------------|
+| `type` | ✅ Yes | Either `"image"` or `"video"` |
+| `src` | ✅ Yes | Path to the file (e.g., `/images/projects/detail.jpg`) |
+| `caption` | No | Optional caption displayed below the media |
+
+> **📁 Where to put images/videos:**  
+> Place files in `public/images/projects/` or `public/videos/projects/`. Then reference them as `/images/projects/filename.jpg` in your markdown.
 
 ---
 

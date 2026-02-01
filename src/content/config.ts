@@ -10,6 +10,18 @@ const projectsCollection = defineCollection({
     image: z.string().optional(),
     featured: z.boolean().default(false),
     order: z.number().default(100),
+    // Cover image for project card thumbnail
+    coverImage: z.string().optional(),
+    // Gallery for project detail page (images and videos)
+    gallery: z
+      .array(
+        z.object({
+          type: z.enum(["image", "video"]),
+          src: z.string(),
+          caption: z.string().optional(),
+        }),
+      )
+      .optional(),
   }),
 });
 

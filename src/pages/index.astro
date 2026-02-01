@@ -204,36 +204,44 @@ const socials = await getEntry("socials", "links");
             <article class="project-card">
               <a href={`/projects/${project.slug}`} class="project-link">
                 <div class="project-image">
-                  <div class="project-placeholder">
-                    <svg viewBox="0 0 100 100" fill="none">
-                      <rect
-                        x="20"
-                        y="30"
-                        width="60"
-                        height="40"
-                        rx="5"
-                        stroke="currentColor"
-                        stroke-width="2"
-                        fill="none"
-                      />
-                      <circle
-                        cx="35"
-                        cy="70"
-                        r="8"
-                        stroke="currentColor"
-                        stroke-width="2"
-                        fill="none"
-                      />
-                      <circle
-                        cx="65"
-                        cy="70"
-                        r="8"
-                        stroke="currentColor"
-                        stroke-width="2"
-                        fill="none"
-                      />
-                    </svg>
-                  </div>
+                  {project.data.coverImage ? (
+                    <img
+                      src={project.data.coverImage}
+                      alt={project.data.title}
+                      class="project-cover-img"
+                    />
+                  ) : (
+                    <div class="project-placeholder">
+                      <svg viewBox="0 0 100 100" fill="none">
+                        <rect
+                          x="20"
+                          y="30"
+                          width="60"
+                          height="40"
+                          rx="5"
+                          stroke="currentColor"
+                          stroke-width="2"
+                          fill="none"
+                        />
+                        <circle
+                          cx="35"
+                          cy="70"
+                          r="8"
+                          stroke="currentColor"
+                          stroke-width="2"
+                          fill="none"
+                        />
+                        <circle
+                          cx="65"
+                          cy="70"
+                          r="8"
+                          stroke="currentColor"
+                          stroke-width="2"
+                          fill="none"
+                        />
+                      </svg>
+                    </div>
+                  )}
                 </div>
                 <div class="project-info">
                   <h3>{project.data.title}</h3>
@@ -622,6 +630,18 @@ const socials = await getEntry("socials", "links");
   .project-image {
     aspect-ratio: 16/10;
     background: var(--bg-tertiary);
+    overflow: hidden;
+  }
+
+  .project-cover-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform var(--transition-normal);
+  }
+
+  .project-card:hover .project-cover-img {
+    transform: scale(1.05);
   }
 
   .project-placeholder {

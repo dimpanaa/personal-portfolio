@@ -54,6 +54,44 @@ const { Content } = await project.render();
         <div class="project-body">
           <Content />
         </div>
+
+        {/* Project Gallery */}
+        {
+          project.data.gallery && project.data.gallery.length > 0 && (
+            <section class="project-gallery">
+              <h2 class="gallery-title">Project Gallery</h2>
+              <div class="gallery-grid">
+                {project.data.gallery.map(
+                  (item: { type: string; src: string; caption?: string }) => (
+                    <figure class="gallery-item">
+                      {item.type === "video" ? (
+                        <video
+                          controls
+                          preload="metadata"
+                          class="gallery-media"
+                        >
+                          <source src={item.src} type="video/mp4" />
+                          Your browser does not support the video tag.
+                        </video>
+                      ) : (
+                        <img
+                          src={item.src}
+                          alt={item.caption || project.data.title}
+                          class="gallery-media"
+                        />
+                      )}
+                      {item.caption && (
+                        <figcaption class="gallery-caption">
+                          {item.caption}
+                        </figcaption>
+                      )}
+                    </figure>
+                  ),
+                )}
+              </div>
+            </section>
+          )
+        }
       </article>
     </div>
   </div>
@@ -220,5 +258,67 @@ const { Content } = await project.render();
     .project-body {
       font-size: 1rem;
     }
+
+    .gallery-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  /* ===== PROJECT GALLERY ===== */
+  .project-gallery {
+    margin-top: 60px;
+    padding-top: 40px;
+    border-top: 1px solid var(--gray-800);
+  }
+
+  .gallery-title {
+    font-family: var(--font-serif);
+    font-size: 1.8rem;
+    color: var(--text-primary);
+    margin-bottom: 30px;
+    text-transform: none;
+    letter-spacing: normal;
+  }
+
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 24px;
+  }
+
+  .gallery-item {
+    margin: 0;
+    border-radius: 12px;
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid var(--gray-800);
+    transition:
+      border-color 0.3s,
+      transform 0.3s;
+  }
+
+  .gallery-item:hover {
+    border-color: var(--gray-600);
+    transform: translateY(-4px);
+  }
+
+  .gallery-media {
+    width: 100%;
+    height: auto;
+    display: block;
+    aspect-ratio: 16/10;
+    object-fit: cover;
+  }
+
+  video.gallery-media {
+    background: #000;
+  }
+
+  .gallery-caption {
+    padding: 16px;
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    text-align: center;
+    background: rgba(255, 255, 255, 0.02);
   }
 </style>
