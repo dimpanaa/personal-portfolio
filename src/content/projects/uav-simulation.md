@@ -4,6 +4,14 @@ description: "Design and Simulation of a Low-Speed Fixed-Wing UAV"
 tags: ["CFD", "MATLAB", "Solidworks", "Simulation", "Analysis"]
 featured: true
 order: 2
+coverImage: "/images/projects/uav-card.jpg"
+gallery:
+  - type: image
+    src: "/images/projects/uav-card.jpg"
+    caption: "UAV Simulation"
+  - type: image
+    src: "/images/projects/uav(1).jpg"
+    caption: "UAV Simulation"
 ---
 
 In this project, I designed a small fixed-wing UAV in the 3 kg MTOW class , focusing on efficient lift generation and stable low-speed flight. The work was carried out as part of a UAV internship, where I applied theoretical concepts through hands-on design, simulation, and analysis tasks.

@@ -15,6 +15,9 @@ order: 1
 coverImage: "/images/projects/v8-card.jpg"
 gallery:
   - type: image
+    src: "/images/projects/v8-card.jpg"
+    caption: "V8 Engine"
+  - type: image
     src: "/images/projects/v8(1).jpg"
     caption: "V8 Engine"
   - type: image
