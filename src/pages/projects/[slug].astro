@@ -62,13 +62,16 @@ const { Content } = await project.render();
               <h2 class="gallery-title">Project Gallery</h2>
               <div class="gallery-grid">
                 {project.data.gallery.map(
-                  (item: { type: string; src: string; caption?: string }) => (
+                  (
+                    item: { type: string; src: string; caption?: string },
+                    index: number,
+                  ) => (
                     <figure class="gallery-item">
                       {item.type === "video" ? (
                         <video
                           controls
                           preload="metadata"
-                          class="gallery-media"
+                          class="gallery-media gallery-video"
                         >
                           <source src={item.src} type="video/mp4" />
                           Your browser does not support the video tag.
@@ -77,7 +80,9 @@ const { Content } = await project.render();
                         <img
                           src={item.src}
                           alt={item.caption || project.data.title}
-                          class="gallery-media"
+                          class="gallery-media gallery-image"
+                          data-index={index}
+                          data-caption={item.caption || ""}
                         />
                       )}
                       {item.caption && (
@@ -92,6 +97,27 @@ const { Content } = await project.render();
             </section>
           )
         }
+
+        {/* Lightbox Overlay */}
+        <div id="lightbox" class="lightbox">
+          <div class="lightbox-backdrop"></div>
+          <div class="lightbox-content">
+            <button class="lightbox-close" aria-label="Close">&times;</button>
+            <div class="lightbox-controls">
+              <button class="lightbox-zoom-in" aria-label="Zoom in">+</button>
+              <button class="lightbox-zoom-out" aria-label="Zoom out"
+                >&minus;</button
+              >
+              <button class="lightbox-reset" aria-label="Reset zoom">↺</button>
+            </div>
+            <div class="lightbox-image-container">
+              <img id="lightbox-img" src="" alt="" class="lightbox-img" />
+            </div>
+            <p id="lightbox-caption" class="lightbox-caption"></p>
+          </div>
+          <button class="lightbox-prev" aria-label="Previous">‹</button>
+          <button class="lightbox-next" aria-label="Next">›</button>
+        </div>
       </article>
     </div>
   </div>
@@ -315,10 +341,353 @@ const { Content } = await project.render();
   }
 
   .gallery-caption {
-    padding: 16px;
-    font-size: 0.95rem;
+    padding: 12px;
+    font-size: 0.8rem;
     color: var(--text-secondary);
     text-align: center;
     background: rgba(255, 255, 255, 0.02);
   }
+
+  .gallery-image {
+    cursor: pointer;
+  }
+
+  .gallery-image:hover {
+    opacity: 0.9;
+  }
+
+  /* ===== LIGHTBOX ===== */
+  .lightbox {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+  }
+
+  .lightbox.active {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .lightbox-backdrop {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.95);
+    cursor: pointer;
+  }
+
+  .lightbox-content {
+    position: relative;
+    max-width: 90vw;
+    max-height: 90vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .lightbox-close {
+    position: absolute;
+    top: -40px;
+    right: -10px;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 2.5rem;
+    cursor: pointer;
+    z-index: 10001;
+    line-height: 1;
+    padding: 0 10px;
+    transition: color 0.2s;
+  }
+
+  .lightbox-close:hover {
+    color: var(--accent-primary);
+  }
+
+  .lightbox-controls {
+    position: absolute;
+    top: -40px;
+    left: 0;
+    display: flex;
+    gap: 8px;
+    z-index: 10001;
+  }
+
+  .lightbox-controls button {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: white;
+    width: 32px;
+    height: 32px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+  }
+
+  .lightbox-controls button:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: var(--accent-primary);
+  }
+
+  .lightbox-image-container {
+    overflow: hidden;
+    max-width: 90vw;
+    max-height: 80vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .lightbox-img {
+    max-width: 100%;
+    max-height: 80vh;
+    object-fit: contain;
+    transition: transform 0.2s ease;
+    cursor: grab;
+  }
+
+  .lightbox-img:active {
+    cursor: grabbing;
+  }
+
+  .lightbox-caption {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    text-align: center;
+    margin-top: 16px;
+    max-width: 600px;
+  }
+
+  .lightbox-prev,
+  .lightbox-next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    color: white;
+    font-size: 3rem;
+    padding: 20px 15px;
+    cursor: pointer;
+    z-index: 10001;
+    transition: all 0.2s;
+  }
+
+  .lightbox-prev {
+    left: 20px;
+    border-radius: 8px;
+  }
+
+  .lightbox-next {
+    right: 20px;
+    border-radius: 8px;
+  }
+
+  .lightbox-prev:hover,
+  .lightbox-next:hover {
+    background: rgba(255, 255, 255, 0.2);
+    color: var(--accent-primary);
+  }
+
+  @media (max-width: 768px) {
+    .lightbox-prev,
+    .lightbox-next {
+      padding: 15px 10px;
+      font-size: 2rem;
+    }
+
+    .lightbox-controls {
+      top: -35px;
+    }
+
+    .lightbox-close {
+      top: -35px;
+    }
+  }
 </style>
+
+<script>
+  // Lightbox functionality
+  document.addEventListener("DOMContentLoaded", () => {
+    const lightbox = document.getElementById("lightbox");
+    const lightboxImg = document.getElementById(
+      "lightbox-img",
+    ) as HTMLImageElement;
+    const lightboxCaption = document.getElementById("lightbox-caption");
+    const backdrop = document.querySelector(".lightbox-backdrop");
+    const closeBtn = document.querySelector(".lightbox-close");
+    const prevBtn = document.querySelector(".lightbox-prev");
+    const nextBtn = document.querySelector(".lightbox-next");
+    const zoomInBtn = document.querySelector(".lightbox-zoom-in");
+    const zoomOutBtn = document.querySelector(".lightbox-zoom-out");
+    const resetBtn = document.querySelector(".lightbox-reset");
+
+    const galleryImages = document.querySelectorAll(".gallery-image");
+    let currentIndex = 0;
+    let currentZoom = 1;
+    let translateX = 0;
+    let translateY = 0;
+    let isDragging = false;
+    let startX = 0;
+    let startY = 0;
+
+    // Collect image sources (only images, not videos)
+    const imageSources: { src: string; caption: string }[] = [];
+    galleryImages.forEach((img) => {
+      const imgEl = img as HTMLImageElement;
+      imageSources.push({
+        src: imgEl.src,
+        caption: imgEl.dataset.caption || "",
+      });
+    });
+
+    function openLightbox(index: number) {
+      if (index < 0 || index >= imageSources.length) return;
+      currentIndex = index;
+      currentZoom = 1;
+      translateX = 0;
+      translateY = 0;
+      updateTransform();
+
+      lightboxImg.src = imageSources[index].src;
+      if (lightboxCaption) {
+        lightboxCaption.textContent = imageSources[index].caption;
+      }
+      lightbox?.classList.add("active");
+      document.body.style.overflow = "hidden";
+    }
+
+    function closeLightbox() {
+      lightbox?.classList.remove("active");
+      document.body.style.overflow = "";
+      lightboxImg.src = "";
+    }
+
+    function updateTransform() {
+      lightboxImg.style.transform = `scale(${currentZoom}) translate(${translateX}px, ${translateY}px)`;
+    }
+
+    function zoomIn() {
+      currentZoom = Math.min(currentZoom + 0.5, 5);
+      updateTransform();
+    }
+
+    function zoomOut() {
+      currentZoom = Math.max(currentZoom - 0.5, 0.5);
+      if (currentZoom <= 1) {
+        translateX = 0;
+        translateY = 0;
+      }
+      updateTransform();
+    }
+
+    function resetZoom() {
+      currentZoom = 1;
+      translateX = 0;
+      translateY = 0;
+      updateTransform();
+    }
+
+    function showPrev() {
+      if (currentIndex > 0) {
+        openLightbox(currentIndex - 1);
+      }
+    }
+
+    function showNext() {
+      if (currentIndex < imageSources.length - 1) {
+        openLightbox(currentIndex + 1);
+      }
+    }
+
+    // Click handlers for gallery images
+    galleryImages.forEach((img, index) => {
+      img.addEventListener("click", () => openLightbox(index));
+    });
+
+    // Close handlers
+    closeBtn?.addEventListener("click", closeLightbox);
+    backdrop?.addEventListener("click", closeLightbox);
+
+    // Navigation
+    prevBtn?.addEventListener("click", showPrev);
+    nextBtn?.addEventListener("click", showNext);
+
+    // Zoom controls
+    zoomInBtn?.addEventListener("click", zoomIn);
+    zoomOutBtn?.addEventListener("click", zoomOut);
+    resetBtn?.addEventListener("click", resetZoom);
+
+    // Keyboard navigation
+    document.addEventListener("keydown", (e) => {
+      if (!lightbox?.classList.contains("active")) return;
+
+      switch (e.key) {
+        case "Escape":
+          closeLightbox();
+          break;
+        case "ArrowLeft":
+          showPrev();
+          break;
+        case "ArrowRight":
+          showNext();
+          break;
+        case "+":
+        case "=":
+          zoomIn();
+          break;
+        case "-":
+          zoomOut();
+          break;
+        case "0":
+          resetZoom();
+          break;
+      }
+    });
+
+    // Mouse wheel zoom
+    lightboxImg?.addEventListener("wheel", (e) => {
+      e.preventDefault();
+      if (e.deltaY < 0) {
+        zoomIn();
+      } else {
+        zoomOut();
+      }
+    });
+
+    // Pan/drag support
+    lightboxImg?.addEventListener("mousedown", (e) => {
+      if (currentZoom > 1) {
+        isDragging = true;
+        startX = e.clientX - translateX;
+        startY = e.clientY - translateY;
+        lightboxImg.style.cursor = "grabbing";
+      }
+    });
+
+    document.addEventListener("mousemove", (e) => {
+      if (!isDragging) return;
+      translateX = e.clientX - startX;
+      translateY = e.clientY - startY;
+      updateTransform();
+    });
+
+    document.addEventListener("mouseup", () => {
+      isDragging = false;
+      if (lightboxImg) {
+        lightboxImg.style.cursor = currentZoom > 1 ? "grab" : "default";
+      }
+    });
+  });
+</script>
