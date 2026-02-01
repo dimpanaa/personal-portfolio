@@ -1,12 +1,15 @@
 ---
-# Example Achievement Entry
-# To add a new achievement, copy this template and rename the file
-# Remove the underscore prefix from the filename (e.g., "design-competition.md")
+# Template for achievements - copy this file and rename it
+# Files starting with _ are ignored
 
 title: "Achievement Title"
-description: "Brief description of the achievement"
+description: "Brief description shown on card"
 date: "Month Year"
-order: 1 # Lower number = appears first
+image: "/images/achievements/your-achievement.jpg"
+gallery:
+  - "/images/achievements/your-achievement.jpg"
+  - "/images/achievements/your-achievement-2.jpg"
+order: 1
 ---
 
-Optional extended description of the achievement, including details about the competition, project, or recognition received.
+Extended details about the achievement shown when expanded.

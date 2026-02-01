@@ -4,9 +4,9 @@ import V8Engine from "../components/V8Engine.astro";
 import Antigravity from "../components/Antigravity.jsx";
 import Education from "../components/Education.astro";
 import Experience from "../components/Experience.astro";
-import Certifications from "../components/Certifications.astro";
+import Achievements from "../components/Achievements.tsx";
 import ShinyText from "../components/ShinyText.jsx";
-import { getCollection } from "astro:content";
+import { getCollection, getEntry } from "astro:content";
 
 // Fetch projects from content collection, sorted by order
 const projects = await getCollection("projects");
@@ -15,8 +15,38 @@ const sortedProjects = [...projects].sort(
 );
 
 // Fetch social links
-import { getEntry } from "astro:content";
 const socials = await getEntry("socials", "links");
+
+// Fetch certifications and achievements for combined Achievements section
+const certifications = await getCollection("certifications");
+const achievementsData = await getCollection("achievements");
+
+// Combine and normalize items for Achievements component
+const achievementItems = [
+  ...certifications.map((c) => ({
+    id: `cert-${c.slug}`,
+    type: "Certification" as const,
+    title: c.data.title,
+    subtitle: c.data.issuer,
+    description: c.body || "",
+    date: c.data.date,
+    image: c.data.image || `/images/achievements/${c.slug}.jpg`,
+    gallery: c.data.gallery || [`/images/achievements/${c.slug}.jpg`],
+    credentialUrl: c.data.credentialUrl,
+    order: c.data.order,
+  })),
+  ...achievementsData.map((a) => ({
+    id: `ach-${a.slug}`,
+    type: "Achievement" as const,
+    title: a.data.title,
+    subtitle: a.data.description,
+    description: a.body || "",
+    date: a.data.date,
+    image: a.data.image || `/images/achievements/${a.slug}.jpg`,
+    gallery: a.data.gallery || [`/images/achievements/${a.slug}.jpg`],
+    order: a.data.order,
+  })),
+].sort((a, b) => a.order - b.order);
 ---
 
 <Layout title="Dimpana Jadhav | Mechanical Engineer & Creator">
@@ -54,7 +84,7 @@ const socials = await getEntry("socials", "links");
         <a href="#portfolio">Portfolio</a>
         <a href="#experience">Experience</a>
         <a href="#education">Education</a>
-        <a href="#credentials">Credentials</a>
+        <a href="#achievements">Achievements</a>
         <a href="#contact">Contact</a>
 
         <div class="nav-socials">
@@ -267,8 +297,8 @@ const socials = await getEntry("socials", "links");
   <!-- Education Section -->
   <Education />
 
-  <!-- Certifications & Achievements -->
-  <Certifications />
+  <!-- Achievements Section -->
+  <Achievements client:load items={achievementItems} />
 
   <!-- Contact Section -->
   <section class="section contact" id="contact">

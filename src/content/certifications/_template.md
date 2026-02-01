@@ -1,13 +1,16 @@
 ---
-# Example Certification Entry
-# To add a new certification, copy this template and rename the file
-# Remove the underscore prefix from the filename (e.g., "solidworks-cert.md")
+# Template for certifications - copy this file and rename it
+# Files starting with _ are ignored
 
 title: "Certification Name"
 issuer: "Issuing Organization"
 date: "Month Year"
-credentialUrl: "https://example.com/verify" # Optional - remove if not available
-order: 1 # Lower number = appears first
+credentialUrl: "https://verify-link.com"
+image: "/images/achievements/your-certification.jpg"
+gallery:
+  - "/images/achievements/your-certification.jpg"
+  - "/images/achievements/your-certification-2.jpg"
+order: 1
 ---
 
-Optional description of what this certification covers or its significance.
+Optional description about the certification.

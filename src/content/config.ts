@@ -62,6 +62,8 @@ const certificationsCollection = defineCollection({
     issuer: z.string(),
     date: z.string(),
     credentialUrl: z.string().optional(),
+    image: z.string().optional(),
+    gallery: z.array(z.string()).optional(),
     order: z.number().default(100),
   }),
 });
@@ -73,6 +75,8 @@ const achievementsCollection = defineCollection({
     title: z.string(),
     description: z.string(),
     date: z.string(),
+    image: z.string().optional(),
+    gallery: z.array(z.string()).optional(),
     order: z.number().default(100),
   }),
 });
