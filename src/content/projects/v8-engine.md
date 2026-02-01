@@ -1,7 +1,7 @@
 ---
-title: "V8 Engine Model"
-description: "Detailed 3D model of a V8 engine with working animations"
-tags: ["SolidWorks", "CAD"]
+title: "V8 Engine: Mechanical Design & Additive Manufacturing"
+description: "Designed and fabricated a 3D-printed scale V8 engine model to demonstrate core engine architecture, component integration, and mechanical motion. The project emphasizes precision CAD modeling, kinematic relationships between moving parts, and design-for-additive-manufacturing principles, resulting in a functional, visually accurate mechanical system. elaborate this"
+tags: ["SolidWorks", "Kinematics", "Tolerancing", "Assembly", "Kinematics", "Additive Manufacturing"]
 featured: true
 order: 1
 ---
