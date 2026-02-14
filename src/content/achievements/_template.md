@@ -3,7 +3,7 @@
 # Files starting with _ are ignored
 
 title: "Achievement Title"
-description: "Brief description shown on card"
+# description: "Brief description shown on card"
 date: "Month Year"
 image: "/images/achievements/your-achievement.jpg"
 gallery:
