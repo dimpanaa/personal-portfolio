@@ -212,9 +212,10 @@ export default function Achievements({ items }: AchievementsProps) {
                 <p className="expanded-subtitle">{selected.subtitle}</p>
                 <p className="expanded-date">{selected.date}</p>
                 {selected.description && (
-                  <div className="expanded-description">
-                    {selected.description}
-                  </div>
+                  <div
+                    className="expanded-description"
+                    dangerouslySetInnerHTML={{ __html: selected.description }}
+                  />
                 )}
                 {selected.credentialUrl && (
                   <a
