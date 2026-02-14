@@ -526,13 +526,13 @@ const achievementItems = [
 
   .hero-grid {
     display: grid;
-    grid-template-columns: 1.2fr 1fr;
-    gap: var(--space-xl);
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-2xl);
     align-items: center;
   }
 
   .hero-content {
-    transform: translateX(-150px);
+    /* No transform — content stays within the container */
   }
 
   .hero-title {
@@ -598,7 +598,7 @@ const achievementItems = [
     border-radius: 88% 12% 90% 10% / 83% 11% 89% 17%;
     overflow: hidden;
     border: 2px solid var(--gray-600);
-    transform: translateX(200px);
+    /* No transform — photo stays within the container */
   }
 
   .profile-photo {
