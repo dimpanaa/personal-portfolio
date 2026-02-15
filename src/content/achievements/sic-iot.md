@@ -5,11 +5,8 @@ description: >-
 
   Gained hands-on experience in embedded computing using Raspberry Pi, IoT/IIoT communication protocols, and backend development with Node.js. The program also emphasized network traffic analysis and debugging using Wireshark, supported by data visualization techniques to analyze system behavior and performance-integrating hardware, software, and networking concepts.
 date: "February 2026"
-image: "/images/achievements/best-paper-1.png"
+image: "/images/achievements/sic-iot-1.png"
 gallery:
-  - "/images/achievements/best-paper-1.png"
-  - "/images/achievements/best-paper-2.png"
-  - "/images/achievements/best-paper-3.png"
-  - "/images/achievements/best-paper-4.png"
+  - "/images/achievements/sic-iot-1.png"
 order: 3
 ---
