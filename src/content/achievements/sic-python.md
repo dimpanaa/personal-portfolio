@@ -9,5 +9,6 @@ image: "/images/achievements/sic-python-1.png"
 gallery:
   - "/images/achievements/sic-python-1.png"
   - "/images/achievements/sic-python-2.png"
+  - "/images/achievements/sic-python-3.png"
 order: 5
 ---

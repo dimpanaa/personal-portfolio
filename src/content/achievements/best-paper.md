@@ -20,5 +20,6 @@ gallery:
   - "/images/achievements/best-paper-2.png"
   - "/images/achievements/best-paper-3.png"
   - "/images/achievements/best-paper-4.png"
+  - "/images/achievements/best-paper-5.png"
 order: 2
 ---

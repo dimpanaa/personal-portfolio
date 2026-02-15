@@ -6,5 +6,6 @@ image: "/images/achievements/shikshalokam-1.png"
 gallery:
   - "/images/achievements/shikshalokam-1.png"
   - "/images/achievements/shikshalokam-2.png"
+  - "/images/achievements/shikshalokam-3.png"
 order: 1
 ---
